@@ -18,16 +18,36 @@ export async function ensureOrg(): Promise<Org | null> {
   const user = await getSession();
   if (!sql || !user) return null;
 
-  const member = await sql`select org_id from org_members where user_id = ${user.id} limit 1`;
+  // Deterministic: always resolve to the user's OLDEST membership.
+  const member = await sql`select org_id from org_members where user_id = ${user.id} order by created_at limit 1`;
   if (member.length) {
     const o = await sql`select id, name, plan, stripe_customer_id from orgs where id = ${member[0].org_id}`;
     return (o[0] as Org) ?? null;
   }
 
+  // Create the personal org + membership atomically, guarded against a
+  // concurrent first-load creating a duplicate (CTE only inserts if the user
+  // has no membership yet).
   const name = (user.email.split("@")[1] ?? "My team").replace(/\..*/, "");
-  const created = await sql`insert into orgs (name, created_by) values (${name}, ${user.id}) returning id, name, plan, stripe_customer_id`;
+  const created = await sql`
+    with new_org as (
+      insert into orgs (name, created_by)
+      select ${name}, ${user.id}
+      where not exists (select 1 from org_members where user_id = ${user.id})
+      returning id, name, plan, stripe_customer_id
+    ), link as (
+      insert into org_members (org_id, user_id, role)
+      select id, ${user.id}, 'owner' from new_org
+      on conflict (org_id, user_id) do nothing
+    )
+    select * from new_org`;
+  if (!created.length) {
+    // Lost the race — another request created it. Resolve the existing one.
+    const m = await sql`select org_id from org_members where user_id = ${user.id} order by created_at limit 1`;
+    const o = await sql`select id, name, plan, stripe_customer_id from orgs where id = ${m[0].org_id}`;
+    return (o[0] as Org) ?? null;
+  }
   const org = created[0] as Org;
-  await sql`insert into org_members (org_id, user_id, role) values (${org.id}, ${user.id}, 'owner')`;
   // Seed the register with the known directory tools (status "review").
   for (const t of TOOLS) {
     await sql`insert into tool_register (org_id, tool_slug, name, status) values (${org.id}, ${t.slug}, ${t.name}, 'review') on conflict (org_id, tool_slug) do nothing`;
