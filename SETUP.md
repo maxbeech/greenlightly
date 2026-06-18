@@ -1,37 +1,36 @@
-# Turning on accounts & billing
+# Configuration
 
-The public site is live with no configuration. To enable signup, the team
-dashboard and paid plans:
+The production deployment is **fully configured** — signup, the team dashboard
+and Stripe (test mode) billing are live. This documents how it's wired so it can
+be reproduced or moved to live keys.
 
-## 1. Supabase (accounts + dashboard)
+## Database — Neon Postgres (provisioned)
 
-1. Create a free project at [supabase.com](https://supabase.com).
-2. In the SQL editor, run [`supabase/migrations/0001_init.sql`](./supabase/migrations/0001_init.sql).
-3. In **Authentication → URL Configuration**, add your site URL and
-   `https://<your-domain>/auth/callback` as a redirect URL.
-4. From **Project Settings → API**, set Vercel env vars:
-   - `NEXT_PUBLIC_SUPABASE_URL`
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   - `SUPABASE_SERVICE_ROLE_KEY` (server only)
+Provisioned via the Vercel Marketplace and connected to the project, which
+auto-injects `DATABASE_URL` (+ `DATABASE_URL_UNPOOLED`, `POSTGRES_*`) for all
+environments. The app reads `DATABASE_URL` via `lib/db.ts`.
 
-That's enough for magic-link signup, the tool register, versioned policies and
-attestations.
+- Schema lives in `db/schema.sql`. Apply/update it with `npm run migrate`
+  (uses `psql` against `DATABASE_URL_UNPOOLED`).
+- To re-provision elsewhere: `vercel integration add neon` then `npm run migrate`.
 
-## 2. Stripe (paid plans) — optional
+## Auth — self-contained (no external provider)
 
-1. In [dashboard.stripe.com](https://dashboard.stripe.com), create two recurring
-   prices (Team $49/mo, Business $149/mo).
-2. Set env vars: `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PRICE_TEAM`,
-   `NEXT_PUBLIC_STRIPE_PRICE_BUSINESS`.
-3. Add a webhook to `https://<your-domain>/api/stripe/webhook` for
-   `checkout.session.completed`, `customer.subscription.updated` and
-   `customer.subscription.deleted`; set `STRIPE_WEBHOOK_SECRET`.
+Email + password (`bcryptjs`) with a signed `jose` JWT in an httpOnly cookie.
+Requires `AUTH_SECRET` (set in Vercel). No email/OAuth provider needed, so
+signup works out of the box. (Email verification + password reset are a planned
+addition — they need a transactional email key.)
 
-Until Stripe is configured, the billing page shows an honest "not connected"
-state and the workspace runs on the free plan.
+## Billing — Stripe (test mode)
 
-## Keeping the directory fresh
+Wired with Stripe **test** keys. Two recurring test prices (Team $49, Business
+$149) and a webhook endpoint were created via the Stripe API. Env vars (Vercel):
+`STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `NEXT_PUBLIC_STRIPE_PRICE_TEAM`,
+`NEXT_PUBLIC_STRIPE_PRICE_BUSINESS`.
 
-The AI Tool Risk Directory lives in [`data/ai-tools.json`](./data/ai-tools.json).
-Edit it (or regenerate with the research workflow) and redeploy — the directory,
-per-tool pages, `llms.txt` and sitemap all rebuild from it.
+**To go live:** swap `STRIPE_SECRET_KEY` for the live key, create live prices +
+a live webhook (`/api/stripe/webhook`), and update the price/webhook env vars.
+
+## Local dev
+
+`vercel env pull` writes `.env.local` (gitignored). Then `npm run dev`.

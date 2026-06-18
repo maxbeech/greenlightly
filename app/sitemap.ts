@@ -7,7 +7,7 @@ import { POSTS } from "@/lib/posts";
 export default function sitemap(): MetadataRoute.Sitemap {
   const u = (p: string) => `${SITE.url}${p}`;
   const last = new Date(SITE.updated);
-  const statics = ["/", "/ai-usage-policy-generator", "/tools", "/frameworks", "/pricing", "/blog", "/about"];
+  const statics = ["/", "/ai-usage-policy-generator", "/tools", "/frameworks", "/pricing", "/blog", "/about", "/contact", "/privacy", "/terms", "/security"];
   return [
     ...statics.map((p) => ({ url: u(p), lastModified: last, changeFrequency: "weekly" as const, priority: p === "/" ? 1 : 0.8 })),
     ...TOOLS.map((t) => ({ url: u(`/tools/${t.slug}`), lastModified: last, changeFrequency: "monthly" as const, priority: 0.7 })),

@@ -1,5 +1,5 @@
 import { ensureOrg } from "@/lib/workspace";
-import { isStripeConfigured } from "@/lib/supabase/config";
+import { isStripeConfigured } from "@/lib/stripe";
 import { PLANS } from "@/lib/site";
 
 export default async function BillingPage() {
@@ -8,10 +8,20 @@ export default async function BillingPage() {
   const stripeOn = isStripeConfigured();
   const paidPlans = PLANS.filter((p) => p.id !== "free");
 
+  const isPaid = org.plan !== "free";
   return (
     <div>
-      <h2 className="text-lg font-bold text-slate-900">Billing</h2>
-      <p className="text-sm text-slate-500">Current plan: <span className="font-semibold capitalize text-slate-800">{org.plan}</span></p>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h2 className="text-lg font-bold text-slate-900">Billing</h2>
+          <p className="text-sm text-slate-500">Current plan: <span className="font-semibold capitalize text-slate-800">{org.plan}</span></p>
+        </div>
+        {isPaid && stripeOn && (
+          <form action="/api/stripe/portal" method="post">
+            <button type="submit" className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:border-slate-400">Manage billing</button>
+          </form>
+        )}
+      </div>
 
       {!stripeOn && (
         <p className="mt-4 rounded-lg bg-amber-50 px-4 py-3 text-sm text-amber-900 ring-1 ring-amber-100">

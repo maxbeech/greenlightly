@@ -19,6 +19,11 @@ export const SITE = {
   primaryKeyword: "ai governance",
 };
 
+// A signed-in org is on a paid plan if it isn't on "free". Paid unlocks
+// attestation collection and the compliance export.
+export const isPaidPlan = (plan: string | undefined | null): boolean =>
+  plan === "team" || plan === "business";
+
 export type NavLink = { label: string; href: string };
 
 export const NAV: NavLink[] = [

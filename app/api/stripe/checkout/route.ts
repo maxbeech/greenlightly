@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { getStripe, priceForPlan } from "@/lib/stripe";
-import { getUser } from "@/lib/supabase/server";
+import { getSession } from "@/lib/auth";
 import { ensureOrg } from "@/lib/workspace";
 import { SITE } from "@/lib/site";
 
@@ -9,8 +9,8 @@ export async function POST(request: NextRequest) {
   const stripe = getStripe();
   if (!stripe) return NextResponse.json({ error: "Billing not configured" }, { status: 503 });
 
-  const user = await getUser();
-  if (!user) return NextResponse.redirect(`${SITE.url}/login`);
+  const user = await getSession();
+  if (!user) return NextResponse.redirect(`${SITE.url}/login`, { status: 303 });
 
   const form = await request.formData();
   const plan = String(form.get("plan") ?? "team");
@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",
     line_items: [{ price, quantity: 1 }],
-    customer_email: user.email ?? undefined,
+    customer_email: user.email,
     client_reference_id: org.id,
     subscription_data: { trial_period_days: 14, metadata: { org_id: org.id, plan } },
     success_url: `${SITE.url}/dashboard?upgraded=1`,

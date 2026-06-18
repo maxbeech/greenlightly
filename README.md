@@ -13,8 +13,10 @@ track that your team has read the rules.
 ## Stack
 
 Next.js 16 (App Router, TS) + Tailwind 4 on Vercel. The public site is fully
-static/ISR (no backend). The account layer uses Supabase (Auth + Postgres + RLS)
-and Stripe, both **env-gated** — see [SETUP.md](./SETUP.md).
+static/ISR (no backend). The account layer uses **Neon Postgres** with
+self-contained email+password auth (`bcryptjs` + `jose` JWT) and **Stripe** for
+billing — all live in production (Stripe runs in test mode). See
+[SETUP.md](./SETUP.md).
 
 ## Data
 

@@ -1,10 +1,14 @@
 import Stripe from "stripe";
 
 // Stripe client, created only when a secret key is present. All billing routes
-// no-op gracefully (HTTP 503 / setup-pending UI) when this returns null.
+// degrade gracefully (HTTP 503 / setup-pending UI) when this returns null.
 export function getStripe(): Stripe | null {
   const key = process.env.STRIPE_SECRET_KEY;
   return key ? new Stripe(key) : null;
+}
+
+export function isStripeConfigured(): boolean {
+  return Boolean(process.env.STRIPE_SECRET_KEY && process.env.NEXT_PUBLIC_STRIPE_PRICE_TEAM);
 }
 
 export function priceForPlan(plan: string): string | undefined {

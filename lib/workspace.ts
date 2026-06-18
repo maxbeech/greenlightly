@@ -1,79 +1,89 @@
-// Server-side data access for the team workspace. Runs under the signed-in
-// user's RLS context (via the cookie-bound server client). All functions assume
-// the caller already checked the user is authenticated.
+// Server-side data access for the team workspace (Neon Postgres). Tenant
+// scoping is enforced here: every query is keyed on the org the signed-in user
+// belongs to. Assumes the caller has a valid session.
 
-import { getSupabaseServer } from "@/lib/supabase/server";
+import { getSql } from "@/lib/db";
+import { getSession } from "@/lib/auth";
 import { TOOLS } from "@/lib/ai-tools";
 
 export interface Org { id: string; name: string; plan: string; stripe_customer_id: string | null }
-export interface RegisterRow { id: string; tool_slug: string; name: string; status: string; data_allowed: string | null; notes: string | null }
+export interface RegisterRow { id: string; tool_slug: string; name: string; status: string; notes: string | null }
 export interface PolicyRow { id: string; version: number; content_md: string; created_at: string }
 export interface AttestationRow { id: string; token: string; name: string | null; email: string | null; acknowledged_at: string | null; created_at: string }
 
 // Get the user's org, creating a personal one (seeded with the directory) on
-// first visit. Returns null if Supabase isn't configured / no session.
+// first visit. Returns null if not signed in / DB unconfigured.
 export async function ensureOrg(): Promise<Org | null> {
-  const supabase = await getSupabaseServer();
-  if (!supabase) return null;
-  const { data: auth } = await supabase.auth.getUser();
-  const user = auth.user;
-  if (!user) return null;
+  const sql = getSql();
+  const user = await getSession();
+  if (!sql || !user) return null;
 
-  const { data: membership } = await supabase.from("org_members").select("org_id").eq("user_id", user.id).limit(1).maybeSingle();
-  if (membership?.org_id) {
-    const { data: org } = await supabase.from("orgs").select("id,name,plan,stripe_customer_id").eq("id", membership.org_id).single();
-    return (org as Org) ?? null;
+  const member = await sql`select org_id from org_members where user_id = ${user.id} limit 1`;
+  if (member.length) {
+    const o = await sql`select id, name, plan, stripe_customer_id from orgs where id = ${member[0].org_id}`;
+    return (o[0] as Org) ?? null;
   }
 
-  const name = (user.email?.split("@")[1] ?? "My team").replace(/\..*/, "");
-  const { data: org, error } = await supabase.from("orgs").insert({ name, created_by: user.id }).select("id,name,plan,stripe_customer_id").single();
-  if (error || !org) return null;
-  await supabase.from("org_members").insert({ org_id: org.id, user_id: user.id, role: "owner", email: user.email });
+  const name = (user.email.split("@")[1] ?? "My team").replace(/\..*/, "");
+  const created = await sql`insert into orgs (name, created_by) values (${name}, ${user.id}) returning id, name, plan, stripe_customer_id`;
+  const org = created[0] as Org;
+  await sql`insert into org_members (org_id, user_id, role) values (${org.id}, ${user.id}, 'owner')`;
   // Seed the register with the known directory tools (status "review").
-  const seed = TOOLS.map((t) => ({ org_id: org.id, tool_slug: t.slug, name: t.name, status: "review" }));
-  await supabase.from("tool_register").insert(seed);
-  return org as Org;
+  for (const t of TOOLS) {
+    await sql`insert into tool_register (org_id, tool_slug, name, status) values (${org.id}, ${t.slug}, ${t.name}, 'review') on conflict (org_id, tool_slug) do nothing`;
+  }
+  return org;
+}
+
+async function memberOrgId(orgId: string, userId: string): Promise<boolean> {
+  const sql = getSql();
+  if (!sql) return false;
+  const r = await sql`select 1 from org_members where org_id = ${orgId} and user_id = ${userId}`;
+  return r.length > 0;
 }
 
 export async function getRegister(orgId: string): Promise<RegisterRow[]> {
-  const supabase = await getSupabaseServer();
-  if (!supabase) return [];
-  const { data } = await supabase.from("tool_register").select("id,tool_slug,name,status,data_allowed,notes").eq("org_id", orgId).order("name");
-  return (data as RegisterRow[]) ?? [];
+  const sql = getSql();
+  if (!sql) return [];
+  return (await sql`select id, tool_slug, name, status, notes from tool_register where org_id = ${orgId} order by name`) as RegisterRow[];
 }
 
 export async function setToolStatus(orgId: string, slug: string, name: string, status: string): Promise<void> {
-  const supabase = await getSupabaseServer();
-  if (!supabase) return;
-  await supabase.from("tool_register").upsert({ org_id: orgId, tool_slug: slug, name, status, updated_at: new Date().toISOString() }, { onConflict: "org_id,tool_slug" });
+  const sql = getSql();
+  const user = await getSession();
+  if (!sql || !user || !(await memberOrgId(orgId, user.id))) return;
+  const allowed = ["approved", "restricted", "review", "prohibited"];
+  if (!allowed.includes(status)) return;
+  await sql`insert into tool_register (org_id, tool_slug, name, status, updated_at) values (${orgId}, ${slug}, ${name}, ${status}, now())
+            on conflict (org_id, tool_slug) do update set status = excluded.status, updated_at = now()`;
 }
 
 export async function getPolicies(orgId: string): Promise<PolicyRow[]> {
-  const supabase = await getSupabaseServer();
-  if (!supabase) return [];
-  const { data } = await supabase.from("policies").select("id,version,content_md,created_at").eq("org_id", orgId).order("version", { ascending: false });
-  return (data as PolicyRow[]) ?? [];
+  const sql = getSql();
+  if (!sql) return [];
+  return (await sql`select id, version, content_md, created_at from policies where org_id = ${orgId} order by version desc`) as PolicyRow[];
 }
 
 export async function savePolicy(orgId: string, contentMd: string, inputJson: unknown): Promise<void> {
-  const supabase = await getSupabaseServer();
-  if (!supabase) return;
-  const { data: latest } = await supabase.from("policies").select("version").eq("org_id", orgId).order("version", { ascending: false }).limit(1).maybeSingle();
-  const version = (latest?.version ?? 0) + 1;
-  await supabase.from("policies").insert({ org_id: orgId, version, content_md: contentMd, input_json: inputJson });
+  const sql = getSql();
+  const user = await getSession();
+  if (!sql || !user || !(await memberOrgId(orgId, user.id))) return;
+  const latest = await sql`select coalesce(max(version), 0) as v from policies where org_id = ${orgId}`;
+  const version = Number(latest[0].v) + 1;
+  await sql`insert into policies (org_id, version, content_md, input_json) values (${orgId}, ${version}, ${contentMd}, ${JSON.stringify(inputJson)})`;
 }
 
 export async function getAttestations(orgId: string): Promise<AttestationRow[]> {
-  const supabase = await getSupabaseServer();
-  if (!supabase) return [];
-  const { data } = await supabase.from("attestations").select("id,token,name,email,acknowledged_at,created_at").eq("org_id", orgId).order("created_at", { ascending: false });
-  return (data as AttestationRow[]) ?? [];
+  const sql = getSql();
+  if (!sql) return [];
+  return (await sql`select id, token, name, email, acknowledged_at, created_at from attestations where org_id = ${orgId} order by created_at desc`) as AttestationRow[];
 }
 
 export async function createAttestationLink(orgId: string): Promise<string | null> {
-  const supabase = await getSupabaseServer();
-  if (!supabase) return null;
-  const { data: pol } = await supabase.from("policies").select("id").eq("org_id", orgId).order("version", { ascending: false }).limit(1).maybeSingle();
-  const { data } = await supabase.from("attestations").insert({ org_id: orgId, policy_id: pol?.id ?? null }).select("token").single();
-  return data?.token ?? null;
+  const sql = getSql();
+  const user = await getSession();
+  if (!sql || !user || !(await memberOrgId(orgId, user.id))) return null;
+  const pol = await sql`select id from policies where org_id = ${orgId} order by version desc limit 1`;
+  const r = await sql`insert into attestations (org_id, policy_id) values (${orgId}, ${pol[0]?.id ?? null}) returning token`;
+  return r[0]?.token ?? null;
 }

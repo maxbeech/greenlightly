@@ -59,10 +59,15 @@ function Footer() {
         </div>
         <FooterCol title="Product" links={[["AI usage policy generator", "/ai-usage-policy-generator"], ["AI Tool Risk Directory", "/tools"], ["Pricing", "/pricing"], ["Log in", "/login"]]} />
         <FooterCol title="Frameworks" links={[["EU AI Act", "/frameworks/eu-ai-act"], ["NIST AI RMF", "/frameworks/nist-ai-rmf"], ["ISO 42001", "/frameworks/iso-42001"], ["SOC 2", "/frameworks/soc-2"]]} />
-        <FooterCol title="Learn" links={[["Blog", "/blog"], ["What is AI governance?", "/blog/what-is-ai-governance"], ["Shadow AI", "/blog/what-is-shadow-ai"], ["About", "/about"]]} />
+        <FooterCol title="Company" links={[["Blog", "/blog"], ["About", "/about"], ["Contact", "/contact"], ["Security", "/security"]]} />
       </div>
-      <div className="mx-auto max-w-6xl px-5 pb-8 text-xs text-slate-400">
-        © {new Date().getFullYear()} {SITE.name}. Guidance only — not legal advice. Verify vendor facts against their official policies before relying on them.
+      <div className="mx-auto flex max-w-6xl flex-col gap-3 px-5 pb-8 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between">
+        <span>© {new Date().getFullYear()} {SITE.name}. Guidance only — not legal advice. Verify vendor facts against their official sources.</span>
+        <span className="flex gap-4">
+          <Link href="/privacy" className="hover:text-slate-600">Privacy</Link>
+          <Link href="/terms" className="hover:text-slate-600">Terms</Link>
+          <Link href="/security" className="hover:text-slate-600">Security</Link>
+        </span>
       </div>
     </footer>
   );

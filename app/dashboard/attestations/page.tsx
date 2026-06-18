@@ -1,5 +1,6 @@
+import Link from "next/link";
 import { ensureOrg, getAttestations, getPolicies } from "@/lib/workspace";
-import { SITE } from "@/lib/site";
+import { SITE, isPaidPlan } from "@/lib/site";
 import { CopyLink } from "@/components/CopyLink";
 import { actionCreateAttestation } from "../actions";
 
@@ -8,6 +9,17 @@ export default async function AttestationsPage() {
   if (!org) return null;
   const [rows, policies] = await Promise.all([getAttestations(org.id), getPolicies(org.id)]);
   const hasPolicy = policies.length > 0;
+  const paid = isPaidPlan(org.plan);
+
+  if (!paid) {
+    return (
+      <div className="rounded-2xl border border-brand-200 bg-brand-50 p-8 text-center">
+        <h2 className="text-lg font-bold text-slate-900">Collect attestations on the Team plan</h2>
+        <p className="mx-auto mt-2 max-w-md text-sm text-slate-600">Send each colleague a link to read and acknowledge your AI policy, and get a dated record of who signed — the evidence auditors ask for.</p>
+        <Link href="/dashboard/billing" className="mt-5 inline-block rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-700">Upgrade to Team</Link>
+      </div>
+    );
+  }
 
   return (
     <div>

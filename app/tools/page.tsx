@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { TOOLS, toolsByCategory, CATEGORY_LABELS, DATASET_GENERATED, type Category } from "@/lib/ai-tools";
+import { TOOLS, CATEGORY_LABELS, DATASET_GENERATED } from "@/lib/ai-tools";
 import { scoreTool } from "@/lib/risk";
 import { JsonLd } from "@/components/JsonLd";
-import { RiskPill, Section } from "@/components/ui";
+import { Section } from "@/components/ui";
+import { ToolDirectory, type DirItem } from "@/components/ToolDirectory";
 import { pageMeta, datasetLd, breadcrumbLd, faqLd } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
@@ -21,8 +21,10 @@ const FAQS = [
 ];
 
 export default function Page() {
-  const grouped = toolsByCategory();
-  const order = Object.keys(grouped) as Category[];
+  const items: DirItem[] = TOOLS.map((t) => {
+    const r = scoreTool(t);
+    return { slug: t.slug, name: t.name, vendor: t.vendor, category: t.category, categoryLabel: CATEGORY_LABELS[t.category] ?? t.category, notableRisk: t.notableRisk ?? "", band: r.band, score: r.score };
+  });
   return (
     <>
       <JsonLd data={datasetLd({ name: "AI Tool Risk Directory", description: metadata.description as string, path: "/tools", count: TOOLS.length })} />
@@ -42,26 +44,7 @@ export default function Page() {
       </div>
 
       <Section className="py-10">
-        {order.map((cat) => (
-          <div key={cat} className="mb-10">
-            <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-slate-500">{CATEGORY_LABELS[cat] ?? cat}</h2>
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {grouped[cat].map((t) => {
-                const r = scoreTool(t);
-                return (
-                  <Link key={t.slug} href={`/tools/${t.slug}`} className="group rounded-xl border border-slate-200 bg-white p-4 transition hover:border-brand-300 hover:shadow-sm">
-                    <div className="flex items-start justify-between gap-2">
-                      <span className="font-semibold text-slate-900 group-hover:text-brand-700">{t.name}</span>
-                      <RiskPill band={r.band} score={r.score} />
-                    </div>
-                    <p className="mt-1 text-xs text-slate-500">{t.vendor}</p>
-                    <p className="mt-2 line-clamp-2 text-sm text-slate-600">{t.notableRisk}</p>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-        ))}
+        <ToolDirectory items={items} />
       </Section>
 
       <div className="border-t border-slate-200 bg-slate-50">

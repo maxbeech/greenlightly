@@ -49,6 +49,23 @@ export default function Home() {
         </Section>
       </div>
 
+      {/* Stats band — real numbers from the dataset, no fabrication */}
+      <div className="border-b border-slate-200 bg-white">
+        <Section className="grid grid-cols-2 gap-6 py-10 text-center md:grid-cols-4">
+          {[
+            { n: `${TOOLS.length}`, l: "AI tools rated" },
+            { n: `${TOOLS.reduce((s, t) => s + t.sources.length, 0)}+`, l: "facts sourced from vendor policies" },
+            { n: `${FRAMEWORKS.length}`, l: "frameworks mapped" },
+            { n: "$0", l: "to generate your first policy" },
+          ].map((s) => (
+            <div key={s.l}>
+              <div className="text-3xl font-extrabold tracking-tight text-slate-900">{s.n}</div>
+              <div className="mt-1 text-sm text-slate-500">{s.l}</div>
+            </div>
+          ))}
+        </Section>
+      </div>
+
       {/* Three pillars */}
       <Section className="grid gap-6 py-16 md:grid-cols-3">
         {[
@@ -88,6 +105,34 @@ export default function Home() {
           </div>
         </Section>
       </div>
+
+      {/* Positioning vs enterprise tools — honest, no named competitors disparaged */}
+      <Section className="py-16">
+        <div className="rounded-3xl border border-slate-200 bg-white p-8 sm:p-12">
+          <h2 className="max-w-2xl text-2xl font-bold tracking-tight text-slate-900">AI governance was built for the Fortune 500. We built it for everyone else.</h2>
+          <p className="mt-2 max-w-2xl text-slate-600">The enterprise AI-governance platforms are powerful — and sold through sales teams, priced for big budgets, and aimed at companies that already have a compliance function. Most teams don&apos;t. Greenlightly gives you the parts that actually matter, today.</p>
+          <div className="mt-8 grid gap-6 md:grid-cols-2">
+            <div className="rounded-2xl bg-slate-50 p-6">
+              <h3 className="text-sm font-semibold text-slate-500">Enterprise AI governance suites</h3>
+              <ul className="mt-3 space-y-2 text-sm text-slate-600">
+                <li>— &ldquo;Book a demo&rdquo;, annual contracts</li>
+                <li>— Built for dedicated compliance teams</li>
+                <li>— Weeks to onboard</li>
+                <li>— Five-figure starting price</li>
+              </ul>
+            </div>
+            <div className="rounded-2xl bg-brand-50 p-6 ring-1 ring-brand-100">
+              <h3 className="text-sm font-semibold text-brand-700">Greenlightly</h3>
+              <ul className="mt-3 space-y-2 text-sm text-slate-700">
+                <li>✓ Self-serve, free to start</li>
+                <li>✓ Built for teams without a compliance hire</li>
+                <li>✓ A usable policy in minutes</li>
+                <li>✓ $49/mo when you need the team features</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </Section>
 
       {/* Frameworks */}
       <Section className="py-16">
