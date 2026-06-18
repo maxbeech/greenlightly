@@ -1,0 +1,31 @@
+{
+  "name": "greenlightly",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "test": "tsx test/policy.test.mts && tsx test/risk.test.mts && tsx test/tools.test.mts && tsx test/seo.test.mts && tsx test/frameworks.test.mts"
+  },
+  "dependencies": {
+    "next": "16.2.9",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "@supabase/supabase-js": "^2.47.10",
+    "@supabase/ssr": "^0.5.2",
+    "stripe": "^17.5.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.9",
+    "tailwindcss": "^4",
+    "tsx": "^4.19.2",
+    "typescript": "^5"
+  }
+}

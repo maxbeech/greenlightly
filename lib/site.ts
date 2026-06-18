@@ -1,0 +1,84 @@
+// Single source of truth for site-wide identity, used by metadata, JSON-LD,
+// sitemap, nav and footer. Keep `updated` stable to avoid sitemap churn.
+
+export const SITE = {
+  name: "Greenlightly",
+  domain: "greenlightly.com",
+  // Production host. Ships on the vercel.app subdomain until the .com is pointed.
+  url: "https://greenlightly.vercel.app",
+  tagline: "Greenlight AI at work",
+  shortDescription:
+    "Greenlightly helps small and mid-sized teams govern AI — generate an AI usage policy in minutes, see which AI tools are safe to use, and track that your team has read the rules.",
+  description:
+    "Greenlightly is the AI governance tool for companies without a compliance team. Build a tailored AI usage policy with the free generator, look up how 20+ popular AI tools handle your data in the AI Tool Risk Directory, map your obligations under the EU AI Act, NIST AI RMF, ISO 42001 and SOC 2, and keep a register of which tools your team is approved to use.",
+  email: "hello@greenlightly.com",
+  // Stable last-updated date for sitemap lastmod.
+  updated: "2026-06-18",
+  twitter: "@greenlightly",
+  // The single primary keyword cluster this site targets.
+  primaryKeyword: "ai governance",
+};
+
+export type NavLink = { label: string; href: string };
+
+export const NAV: NavLink[] = [
+  { label: "Policy generator", href: "/ai-usage-policy-generator" },
+  { label: "Tool directory", href: "/tools" },
+  { label: "Frameworks", href: "/frameworks" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Blog", href: "/blog" },
+];
+
+// Pricing is defined once here and rendered by the pricing page + Stripe checkout.
+export const PLANS = [
+  {
+    id: "free",
+    name: "Free",
+    price: 0,
+    cadence: "forever",
+    blurb: "Everything an individual needs to write a policy and vet tools.",
+    features: [
+      "AI usage policy generator (unlimited)",
+      "Download policy as Markdown",
+      "Full AI Tool Risk Directory",
+      "Framework guides (EU AI Act, NIST, ISO 42001, SOC 2)",
+    ],
+    cta: "Generate a policy",
+    href: "/ai-usage-policy-generator",
+  },
+  {
+    id: "team",
+    name: "Team",
+    price: 49,
+    cadence: "per month",
+    blurb: "Govern AI across your whole team with a living register.",
+    features: [
+      "Everything in Free",
+      "AI tool register with approve / restrict / review states",
+      "Versioned company AI policy",
+      "Employee attestation tracking (shareable link)",
+      "Exportable compliance report (PDF)",
+      "Up to 50 team members",
+    ],
+    cta: "Start 14-day trial",
+    href: "/signup?plan=team",
+    featured: true,
+  },
+  {
+    id: "business",
+    name: "Business",
+    price: 149,
+    cadence: "per month",
+    blurb: "For regulated teams that need evidence and controls.",
+    features: [
+      "Everything in Team",
+      "Unlimited members",
+      "SSO (SAML) — when configured",
+      "Audit log & evidence export",
+      "Framework control mapping (ISO 42001 / SOC 2)",
+      "Priority support",
+    ],
+    cta: "Start 14-day trial",
+    href: "/signup?plan=business",
+  },
+] as const;

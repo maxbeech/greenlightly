@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #0f172a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  /* Brand: "greenlight" — emerald. Used for accents, approved states, CTAs. */
+  --color-brand-50: #ecfdf5;
+  --color-brand-100: #d1fae5;
+  --color-brand-500: #10b981;
+  --color-brand-600: #059669;
+  --color-brand-700: #047857;
+  --color-brand-900: #064e3b;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Single intentional LIGHT theme. We do not honour prefers-color-scheme:
+   a dark body would sit behind light-theme text. Surfaces set their own
+   explicit Tailwind colours. */
+body {
+  background: #ffffff;
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--color-brand-100); }
+
+/* Subtle dotted grid used behind the hero. */
+.bg-dotgrid {
+  background-image: radial-gradient(circle at 1px 1px, rgba(15, 23, 42, 0.06) 1px, transparent 0);
+  background-size: 22px 22px;
+}
+
+/* Print / Save-as-PDF for the generated policy: drop chrome, keep a clean
+   document. Elements tagged `print:hidden` are removed. */
+@media print {
+  header, footer, .print\:hidden { display: none !important; }
+  main { max-width: 100% !important; padding: 0 !important; }
+  .policy-doc { font-size: 11pt; color: #000; }
+  * { box-shadow: none !important; }
+}
