@@ -61,7 +61,9 @@ export async function setToolStatus(orgId: string, slug: string, name: string, s
 export async function getPolicies(orgId: string): Promise<PolicyRow[]> {
   const sql = getSql();
   if (!sql) return [];
-  return (await sql`select id, version, content_md, created_at from policies where org_id = ${orgId} order by version desc`) as PolicyRow[];
+  // Cast timestamps to text — the driver returns timestamptz as Date objects,
+  // and the UI formats them as strings (.slice).
+  return (await sql`select id, version, content_md, created_at::text as created_at from policies where org_id = ${orgId} order by version desc`) as PolicyRow[];
 }
 
 export async function savePolicy(orgId: string, contentMd: string, inputJson: unknown): Promise<void> {
@@ -70,13 +72,16 @@ export async function savePolicy(orgId: string, contentMd: string, inputJson: un
   if (!sql || !user || !(await memberOrgId(orgId, user.id))) return;
   const latest = await sql`select coalesce(max(version), 0) as v from policies where org_id = ${orgId}`;
   const version = Number(latest[0].v) + 1;
-  await sql`insert into policies (org_id, version, content_md, input_json) values (${orgId}, ${version}, ${contentMd}, ${JSON.stringify(inputJson)})`;
+  // input_json is a jsonb column — Postgres won't implicitly cast a text param,
+  // so cast explicitly.
+  await sql`insert into policies (org_id, version, content_md, input_json)
+            values (${orgId}, ${version}, ${contentMd}, ${JSON.stringify(inputJson)}::jsonb)`;
 }
 
 export async function getAttestations(orgId: string): Promise<AttestationRow[]> {
   const sql = getSql();
   if (!sql) return [];
-  return (await sql`select id, token, name, email, acknowledged_at, created_at from attestations where org_id = ${orgId} order by created_at desc`) as AttestationRow[];
+  return (await sql`select id, token, name, email, acknowledged_at::text as acknowledged_at, created_at::text as created_at from attestations where org_id = ${orgId} order by created_at desc`) as AttestationRow[];
 }
 
 export async function createAttestationLink(orgId: string): Promise<string | null> {
