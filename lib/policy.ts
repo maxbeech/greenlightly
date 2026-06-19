@@ -46,7 +46,7 @@ export function generatePolicy(input: PolicyInput): Policy {
   s.push({
     heading: "Purpose & scope",
     body: [
-      `This AI Usage Policy applies to all employees, contractors and anyone acting on behalf of ${c} who uses artificial-intelligence tools — including general assistants (such as ChatGPT, Claude and Gemini), AI features built into software you already use, and any tool that sends our data to a third-party model.`,
+      `This AI Usage Policy applies to all employees, contractors and anyone acting on behalf of ${c} who uses artificial-intelligence tools. This includes general assistants (such as ChatGPT, Claude and Gemini), AI features built into software you already use, and any tool that sends our data to a third-party model.`,
       "It covers how these tools may be used, what data may and may not be entered into them, and who to ask when you are unsure.",
     ],
   });
@@ -56,7 +56,7 @@ export function generatePolicy(input: PolicyInput): Policy {
     body: [
       fill(STANCE_TONE[input.stance], c),
       [
-        "Use AI to assist your work, not to replace your judgement — you remain accountable for anything you produce with AI.",
+        "Use AI to assist your work, not to replace your judgement. You remain accountable for anything you produce with AI.",
         "Never enter data into an AI tool that you would not be comfortable sending to an untrusted third party.",
         "When in doubt, ask before you paste.",
       ],
@@ -67,11 +67,11 @@ export function generatePolicy(input: PolicyInput): Policy {
     `${c} keeps a register of AI tools and the status of each. Only use tools that are Approved for the data you are working with.`,
   ];
   if (input.approvedTools.length)
-    toolBody.push("Currently approved tools:", input.approvedTools.map((t) => `${t} — approved`));
+    toolBody.push("Currently approved tools:", input.approvedTools.map((t) => `${t}: approved`));
   else
     toolBody.push("The approved-tools list is maintained separately and shared with all staff. If a tool is not on it, treat it as not yet approved.");
   if (input.prohibitedTools.length)
-    toolBody.push("Tools that must not be used for work:", input.prohibitedTools.map((t) => `${t} — prohibited`));
+    toolBody.push("Tools that must not be used for work:", input.prohibitedTools.map((t) => `${t}: prohibited`));
   toolBody.push(`To request a new tool, contact the ${owner}. New tools are assessed for how they handle our data before approval.`);
   s.push({ heading: "Approved tools", body: toolBody });
 
@@ -96,7 +96,7 @@ export function generatePolicy(input: PolicyInput): Policy {
         "AI coding assistants are permitted for approved repositories.",
         [
           "Do not paste secrets, customer data or proprietary source from unrelated systems into a coding assistant.",
-          "Review all AI-generated code before merging — you are responsible for its correctness, security and licence compliance.",
+          "Review all AI-generated code before merging. You are responsible for its correctness, security and licence compliance.",
           "Use the business/enterprise tier of coding assistants where available, as it excludes your code from training.",
         ],
       ],
@@ -145,7 +145,7 @@ export function generatePolicy(input: PolicyInput): Policy {
   const sections = s.map((sec, i) => ({ ...sec, heading: `${i + 1}. ${sec.heading}` }));
 
   return {
-    title: `${c} — AI Usage Policy`,
+    title: `${c} AI Usage Policy`,
     intro: [
       `Effective ${input.effectiveDate}. Owner: ${owner}.`,
       `This is ${c}'s policy on the use of artificial-intelligence tools at work. Please read it before using any AI tool for your job.`,
@@ -164,6 +164,6 @@ export function policyToMarkdown(p: Policy): string {
       else { lines.push(b, ""); }
     }
   }
-  lines.push("---", "_Generated with Greenlightly (greenlightly.com) — review with your own legal/compliance advisor before adopting._");
+  lines.push("---", "_Generated with Greenlightly (greenlightly.com). Review with your own legal or compliance advisor before adopting._");
   return lines.join("\n");
 }

@@ -16,9 +16,9 @@ export default async function ToolsPage() {
 
   return (
     <div>
-      <div className="mb-4">
-        <h2 className="text-lg font-bold text-slate-900">AI tool register</h2>
-        <p className="text-sm text-slate-500">Decide which AI tools your team may use. Risk ratings come from the directory; the status you set here is your team&apos;s policy.</p>
+      <div className="mb-5">
+        <h2 className="font-display text-lg font-semibold text-ink">AI tool register</h2>
+        <p className="mt-1 text-sm text-ink-soft">Decide which AI tools your team may use. Risk ratings come from the directory; the status you set here is your team&apos;s policy.</p>
       </div>
       <RegisterTable items={items} action={actionSetToolStatus} />
     </div>

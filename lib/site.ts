@@ -8,7 +8,7 @@ export const SITE = {
   url: "https://greenlightly.vercel.app",
   tagline: "Greenlight AI at work",
   shortDescription:
-    "Greenlightly helps small and mid-sized teams govern AI — generate an AI usage policy in minutes, see which AI tools are safe to use, and track that your team has read the rules.",
+    "Greenlightly helps small and mid-sized teams govern AI. Generate an AI usage policy quickly, see which AI tools are safe to use, and check your team has read the rules.",
   description:
     "Greenlightly is the AI governance tool for companies without a compliance team. Build a tailored AI usage policy with the free generator, look up how 20+ popular AI tools handle your data in the AI Tool Risk Directory, map your obligations under the EU AI Act, NIST AI RMF, ISO 42001 and SOC 2, and keep a register of which tools your team is approved to use.",
   email: "hello@greenlightly.com",
@@ -78,7 +78,7 @@ export const PLANS = [
     features: [
       "Everything in Team",
       "Unlimited members",
-      "SSO (SAML) — when configured",
+      "SSO (SAML), once configured",
       "Audit log & evidence export",
       "Framework control mapping (ISO 42001 / SOC 2)",
       "Priority support",

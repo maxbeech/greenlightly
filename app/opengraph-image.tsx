@@ -3,21 +3,26 @@ import { SITE } from "@/lib/site";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = `${SITE.name} — ${SITE.tagline}`;
+export const alt = `${SITE.name}: ${SITE.tagline}`;
 
 // Satori-safe: every element with >1 child sets display:flex; no exotic glyphs
-// (which would trigger a failing dynamic-font download).
+// or external fonts. The mark is the signal motif drawn with plain divs.
 export default function OG() {
+  const dot = (bg: string, s: number) => ({ width: s, height: s, borderRadius: 999, background: bg, display: "flex" });
   return new ImageResponse(
     (
-      <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", padding: 80, background: "#ffffff", backgroundImage: "radial-gradient(circle at 1px 1px, #e2e8f0 1px, transparent 0)", backgroundSize: "32px 32px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-          <div style={{ width: 64, height: 64, display: "flex", alignItems: "center", justifyContent: "center", background: "#059669", borderRadius: 16, color: "white", fontSize: 40, fontWeight: 700 }}>G</div>
-          <div style={{ display: "flex", fontSize: 40, fontWeight: 800, color: "#0f172a" }}>Greenlightly</div>
+      <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", padding: 84, background: "#f7f5ef", backgroundImage: "radial-gradient(circle at 1px 1px, #e0dac9 1px, transparent 0)", backgroundSize: "30px 30px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 9, width: 60, height: 80, background: "#185a3f", borderRadius: 20, padding: 10 }}>
+            <div style={dot("rgba(255,255,255,0.30)", 16)} />
+            <div style={dot("rgba(255,255,255,0.30)", 16)} />
+            <div style={dot("#34e08b", 20)} />
+          </div>
+          <div style={{ display: "flex", fontSize: 42, fontWeight: 700, color: "#15201a" }}>Greenlightly</div>
         </div>
-        <div style={{ display: "flex", marginTop: 40, fontSize: 72, fontWeight: 800, color: "#0f172a", lineHeight: 1.05 }}>Greenlight AI at work.</div>
-        <div style={{ display: "flex", marginTop: 28, fontSize: 30, color: "#475569", maxWidth: 950 }}>
-          Generate an AI usage policy, see which AI tools are safe to use, and govern your team — without a compliance department.
+        <div style={{ display: "flex", marginTop: 44, fontSize: 74, fontWeight: 800, color: "#15201a", lineHeight: 1.04, letterSpacing: -1 }}>Greenlight AI at work.</div>
+        <div style={{ display: "flex", marginTop: 28, fontSize: 30, color: "#4b5a52", maxWidth: 960, lineHeight: 1.35 }}>
+          Generate an AI usage policy, see which AI tools are safe to use, and prove your team has read the rules. No compliance department required.
         </div>
       </div>
     ),

@@ -6,7 +6,7 @@ export function CopyLink({ url }: { url: string }) {
   return (
     <button
       onClick={async () => { await navigator.clipboard.writeText(url); setCopied(true); setTimeout(() => setCopied(false), 1500); }}
-      className="rounded-md border border-slate-300 px-2.5 py-1 text-xs font-medium text-slate-600 hover:border-slate-400"
+      className="rounded-md border border-line-strong px-2.5 py-1 text-xs font-medium text-ink-soft transition-colors hover:border-ink-faint hover:bg-paper"
     >
       {copied ? "Copied!" : "Copy link"}
     </button>

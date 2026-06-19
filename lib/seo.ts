@@ -12,7 +12,7 @@ export function pageMeta(opts: {
   keywords?: string[];
 }): Metadata {
   const url = `${SITE.url}${opts.path}`;
-  const title = opts.path === "/" ? opts.title : `${opts.title} — ${SITE.name}`;
+  const title = opts.path === "/" ? opts.title : `${opts.title} · ${SITE.name}`;
   return {
     title,
     description: opts.description,

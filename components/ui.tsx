@@ -2,6 +2,7 @@ import type { Band } from "@/lib/risk";
 import type { Verdict } from "@/lib/ai-tools";
 
 // Fixed class strings (Tailwind cannot see dynamically-built class names).
+// These follow the signal language: green = go, amber = caution, red = stop.
 const BAND_CLASS: Record<Band, string> = {
   Low: "bg-emerald-100 text-emerald-800 ring-emerald-200",
   Medium: "bg-amber-100 text-amber-800 ring-amber-200",
@@ -18,10 +19,10 @@ export function RiskPill({ band, score }: { band: Band; score?: number }) {
   );
 }
 
-// Renders a single data-handling fact. `good` declares which answer is the
+// Renders a single data-handling fact. `goodWhen` declares which answer is the
 // reassuring one so colour matches meaning (e.g. "no training" is good/green).
 export function VerdictTag({ value, goodWhen }: { value: Verdict; goodWhen: "yes" | "no" }) {
-  if (value == null) return <span className="text-slate-400">Unverified</span>;
+  if (value == null) return <span className="text-ink-faint">Unverified</span>;
   const isGood = value === goodWhen || (goodWhen === "no" && value === "n/a");
   const cls = value === "opt-out"
     ? "text-amber-700"
@@ -31,10 +32,27 @@ export function VerdictTag({ value, goodWhen }: { value: Verdict; goodWhen: "yes
 }
 
 export function Pill({ children, tone = "slate" }: { children: React.ReactNode; tone?: "slate" | "brand" }) {
-  const cls = tone === "brand" ? "bg-brand-50 text-brand-700 ring-brand-100" : "bg-slate-100 text-slate-600 ring-slate-200";
-  return <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${cls}`}>{children}</span>;
+  const cls = tone === "brand" ? "bg-brand-50 text-brand-700 ring-brand-100" : "bg-white text-ink-soft ring-line";
+  return <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ring-1 ring-inset ${cls}`}>{children}</span>;
+}
+
+// Small uppercase kicker that sits above section headings.
+export function Eyebrow({ children }: { children: React.ReactNode }) {
+  return <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-600">{children}</p>;
 }
 
 export function Section({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return <section className={`mx-auto max-w-6xl px-5 ${className}`}>{children}</section>;
+}
+
+// Single source of truth for button styling across marketing + app.
+export function btn(variant: "primary" | "secondary" | "ghost" = "primary", size: "md" | "lg" = "md"): string {
+  const base = "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-colors focus-brand disabled:cursor-not-allowed disabled:opacity-60";
+  const sizes = { md: "px-4 py-2 text-sm", lg: "px-6 py-3.5 text-[15px]" };
+  const variants = {
+    primary: "bg-brand-700 text-white shadow-sm hover:bg-brand-800",
+    secondary: "border border-line-strong bg-white text-ink hover:border-ink-faint hover:bg-paper",
+    ghost: "text-ink-soft hover:text-ink",
+  };
+  return `${base} ${sizes[size]} ${variants[variant]}`;
 }

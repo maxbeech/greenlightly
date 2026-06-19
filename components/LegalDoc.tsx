@@ -3,18 +3,24 @@ import { Section } from "@/components/ui";
 
 export function LegalDoc({ doc }: { doc: Doc }) {
   return (
-    <Section className="max-w-2xl py-14">
-      <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">{doc.title}</h1>
-      <p className="mt-1 text-sm text-slate-400">Last updated {doc.updated}</p>
-      <p className="mt-5 text-slate-600">{doc.intro}</p>
-      <div className="mt-8 space-y-7">
-        {doc.sections.map((s) => (
-          <section key={s.h}>
-            <h2 className="text-lg font-bold text-slate-900">{s.h}</h2>
-            {s.p.map((para, i) => <p key={i} className="mt-2 text-sm leading-relaxed text-slate-600">{para}</p>)}
-          </section>
-        ))}
+    <>
+      <div className="border-b border-line bg-paper-glow">
+        <Section className="max-w-2xl py-14 sm:py-16">
+          <h1 className="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">{doc.title}</h1>
+          <p className="mt-2 text-sm text-ink-faint">Last updated {doc.updated}</p>
+          <p className="mt-5 text-lg leading-relaxed text-ink-soft">{doc.intro}</p>
+        </Section>
       </div>
-    </Section>
+      <Section className="max-w-2xl py-12">
+        <div className="space-y-8">
+          {doc.sections.map((s) => (
+            <section key={s.h}>
+              <h2 className="font-display text-xl font-semibold text-ink">{s.h}</h2>
+              {s.p.map((para, i) => <p key={i} className="mt-2 text-sm leading-relaxed text-ink-soft">{para}</p>)}
+            </section>
+          ))}
+        </div>
+      </Section>
+    </>
   );
 }

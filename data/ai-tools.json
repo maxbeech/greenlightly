@@ -124,7 +124,7 @@
       "data_region_eu": "yes",
       "sso_saml": "yes",
       "enterprise_plan": "Microsoft 365 Copilot",
-      "notable_risk": "Copilot inherits the user's existing permissions, so over-shared SharePoint/OneDrive content becomes far easier for employees to surface — an oversharing/governance risk rather than a training one.",
+      "notable_risk": "Copilot inherits the user's existing permissions, so over-shared SharePoint/OneDrive content becomes far easier for employees to surface. That is an oversharing and governance risk rather than a training one.",
       "sources": [
         {"claim": "Prompts, responses, and Graph data not used to train foundation LLMs", "url": "https://learn.microsoft.com/en-us/microsoft-365/copilot/enterprise-data-protection"},
         {"claim": "GDPR, EU Data Boundary, ISO/IEC 27018 compliance and DPA coverage", "url": "https://learn.microsoft.com/en-us/microsoft-365/copilot/microsoft-365-copilot-privacy"},
@@ -444,7 +444,7 @@
       "data_region_eu": "no",
       "sso_saml": null,
       "enterprise_plan": null,
-      "notable_risk": "The hosted DeepSeek app and API store user prompts and personal data on servers in the People's Republic of China (subject to Chinese law) and use inputs to train models by default — a major governance risk that has led to government bans/restrictions in Italy, South Korea, Australia, and multiple US federal agencies.",
+      "notable_risk": "The hosted DeepSeek app and API store user prompts and personal data on servers in the People's Republic of China (subject to Chinese law) and use inputs to train models by default. This is a major governance risk that has led to government bans and restrictions in Italy, South Korea, Australia, and multiple US federal agencies.",
       "sources": [
         {"claim": "User data is collected, processed and stored in the People's Republic of China and inputs are used to train and improve DeepSeek's models, with a stated right to opt out of training.", "url": "https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html"},
         {"claim": "No verifiable SOC 2 / ISO 27001 / ISO 42001 certification, DPA, BAA, or EU data residency for the hosted DeepSeek service (third-party certification claims are conflicting and unverified against official sources).", "url": "https://sonomos.ai/blog/is-deepseek-safe-gdpr-hipaa-2026/"},
@@ -605,7 +605,7 @@
       "data_region_eu": "yes",
       "sso_saml": "yes",
       "enterprise_plan": "Enterprise",
-      "notable_risk": "The main governance gotcha is consent provenance for AI avatars/voices — Synthesia requires documented consent for any likeness, so an at-work user must ensure they have rights to any face or voice they upload to create a custom avatar.",
+      "notable_risk": "The main governance gotcha is consent provenance for AI avatars and voices. Synthesia requires documented consent for any likeness, so an at-work user must ensure they have rights to any face or voice they upload to create a custom avatar.",
       "sources": [
         {"claim": "Does not pre-train AI on customer inputs/outputs; fine-tuning only on customer instruction", "url": "https://www.synthesia.io/legal/ai-governance-practices"},
         {"claim": "SOC 2 Type II, ISO 27001, ISO 27701, ISO 42001 (world-first), GDPR", "url": "https://security.synthesia.io/"},
@@ -669,7 +669,7 @@
       "data_region_eu": null,
       "sso_saml": "yes",
       "enterprise_plan": "Adobe Firefly for enterprise / Creative Cloud for enterprise",
-      "notable_risk": "The bigger governance question is output provenance and indemnity scope rather than training — Firefly is 'commercially safe' and IP-indemnified mainly for enterprise customers, so individual/free users should not assume the same legal coverage for generated assets.",
+      "notable_risk": "The bigger governance question is output provenance and indemnity scope rather than training. Firefly is 'commercially safe' and IP-indemnified mainly for enterprise customers, so individual and free users should not assume the same legal coverage for generated assets.",
       "sources": [
         {"claim": "Adobe does not use customer content to train Firefly models; commercially safe approach", "url": "https://business.adobe.com/products/firefly-business/firefly-ai-approach.html"},
         {"claim": "Adobe does not use customer content to train Firefly (Adobe Express enterprise security overview)", "url": "https://www.adobe.com/cc-shared/assets/pdf/trust-center/ungated/whitepapers/creative-cloud/adobe-express-for-enterprise-security-overview.pdf"},
@@ -688,7 +688,7 @@
       "trust_url": "https://support.read.ai/hc/en-us/articles/25702259763091-Security-Privacy-Overview",
       "subprocessors_url": null,
       "trains_on_personal_data": "opt-out",
-      "trains_on_personal_data_note": "Read AI is opt-out of training by default — meeting content is not used to improve the product unless a user explicitly opts in via a checkbox in settings.",
+      "trains_on_personal_data_note": "Read AI is opt-out of training by default: meeting content is not used to improve the product unless a user explicitly opts in via a checkbox in settings.",
       "trains_on_business_data": "no",
       "trains_on_business_data_note": "Default is opt-out across tiers; HIPAA-locked workspaces make sharing data for training permanently impossible, and training only occurs on explicit user opt-in.",
       "training_optout": "yes",
@@ -701,7 +701,7 @@
       "data_region_eu": null,
       "sso_saml": null,
       "enterprise_plan": "Enterprise",
-      "notable_risk": "The biggest gotcha is the auto-join/bot behaviour — Read can be invited by any participant and join meetings automatically, so sensitive conversations may be silently recorded/transcribed unless hosts and participants actively remove it.",
+      "notable_risk": "The biggest gotcha is the auto-join bot behaviour. Read can be invited by any participant and join meetings automatically, so sensitive conversations may be silently recorded or transcribed unless hosts and participants actively remove it.",
       "sources": [
         {"claim": "Default opt-out of training; opt-in only via settings checkbox", "url": "https://support.read.ai/hc/en-us/articles/25702259763091-Security-Privacy-Overview"},
         {"claim": "SOC 2 Type II, HIPAA, GDPR compliant; privacy-first notetaker", "url": "https://www.read.ai/articles/read-ai-the-privacy-first-meeting-notetaker-and-ai-assistant"},

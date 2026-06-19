@@ -15,12 +15,19 @@ track that your team has read the rules.
 Next.js 16 (App Router, TS) + Tailwind 4 on Vercel. The public site is fully
 static/ISR (no backend). The account layer uses **Neon Postgres** with
 self-contained email+password auth (`bcryptjs` + `jose` JWT) and **Stripe** for
-billing — all live in production (Stripe runs in test mode). See
+billing, all live in production (Stripe runs in test mode). See
 [SETUP.md](./SETUP.md).
+
+Design uses a warm-paper palette with a deep pine brand and a traffic-signal
+motif (stop / caution / go) that maps to the risk bands, with a Fraunces display
+serif over Inter. Shared primitives live in `components/ui.tsx`,
+`components/page.tsx` and `components/brand.tsx`; the interactive marketing
+illustrations are in `components/console.tsx`, `components/mockups.tsx` and
+`components/marketing.tsx`.
 
 ## Data
 
-The AI Tool Risk Directory is `data/ai-tools.json` — facts compiled from each
+The AI Tool Risk Directory is `data/ai-tools.json`, with facts compiled from each
 vendor's official privacy policy, DPA and trust centre, with source links and a
 confidence flag. Unverifiable facts are marked `null` / "Unverified" rather than
 guessed. Risk scoring is transparent and deterministic (`lib/risk.ts`).
@@ -30,7 +37,7 @@ guessed. Risk scoring is transparent and deterministic (`lib/risk.ts`).
 ```bash
 npm install
 npm run dev      # http://localhost:3000
-npm test         # unit tests (policy, risk, tools, seo, frameworks)
+npm test         # unit tests (policy, risk, tools, seo, frameworks, site, no-em-dash)
 npm run build    # production build
 ```
 

@@ -10,12 +10,12 @@ export const revalidate = 604800;
 
 export function GET() {
   const lines: string[] = [];
-  lines.push(`# ${SITE.name} — ${SITE.tagline}`, "");
+  lines.push(`# ${SITE.name}: ${SITE.tagline}`, "");
   lines.push(`> ${SITE.shortDescription}`, "");
   lines.push(`Site: ${SITE.url}`, `Updated: ${SITE.updated}`, "");
   lines.push("## Free tools");
-  lines.push(`- AI Usage Policy Generator: ${SITE.url}/ai-usage-policy-generator — generate a tailored AI usage policy (free, no signup).`);
-  lines.push(`- AI Tool Risk Directory: ${SITE.url}/tools — how ${TOOLS.length} AI tools handle your data, sourced from vendor policies.`, "");
+  lines.push(`- AI Usage Policy Generator: ${SITE.url}/ai-usage-policy-generator: generate a tailored AI usage policy (free, no signup).`);
+  lines.push(`- AI Tool Risk Directory: ${SITE.url}/tools: how ${TOOLS.length} AI tools handle your data, sourced from vendor policies.`, "");
 
   lines.push("## AI Tool Risk Directory (risk for default at-work use)");
   for (const t of TOOLS) {

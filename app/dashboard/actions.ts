@@ -3,8 +3,9 @@
 import { revalidatePath } from "next/cache";
 import { ensureOrg, setToolStatus, savePolicy, createAttestationLink } from "@/lib/workspace";
 
-// All actions re-derive the org server-side (never trust a client-supplied id);
-// RLS is the backstop. Each revalidates the relevant dashboard route.
+// All actions re-derive the org server-side (never trust a client-supplied id),
+// and the workspace helpers verify org membership on every query. Each action
+// revalidates the relevant dashboard route.
 
 export async function actionSetToolStatus(formData: FormData) {
   const org = await ensureOrg();

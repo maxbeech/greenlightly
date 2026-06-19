@@ -16,3 +16,10 @@ export function priceForPlan(plan: string): string | undefined {
   if (plan === "business") return process.env.NEXT_PUBLIC_STRIPE_PRICE_BUSINESS;
   return undefined;
 }
+
+// A specific paid plan can be checked out only if Stripe is configured AND that
+// plan has a price set. Used to enable/disable each upgrade button individually
+// so a button never leads to a dead end.
+export function planAvailable(plan: string): boolean {
+  return isStripeConfigured() && Boolean(priceForPlan(plan));
+}

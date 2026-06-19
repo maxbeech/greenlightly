@@ -15,16 +15,22 @@ export async function POST(request: NextRequest) {
   const form = await request.formData();
   const plan = String(form.get("plan") ?? "team");
   const price = priceForPlan(plan);
-  if (!price) return NextResponse.json({ error: "Unknown plan" }, { status: 400 });
+  // No price configured for this plan: send the user back to pricing rather than
+  // dead-ending on a raw JSON error.
+  if (!price) return NextResponse.redirect(`${SITE.url}/pricing`, { status: 303 });
 
   const org = await ensureOrg();
-  if (!org) return NextResponse.json({ error: "No workspace" }, { status: 400 });
+  if (!org) return NextResponse.redirect(`${SITE.url}/login`, { status: 303 });
 
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",
     line_items: [{ price, quantity: 1 }],
     customer_email: user.email,
     client_reference_id: org.id,
+    // Set metadata at BOTH levels: session-level is what checkout.session.completed
+    // carries, subscription-level is what subscription.* events carry. Without the
+    // session-level copy the webhook can't tell Team from Business and defaults to Team.
+    metadata: { org_id: org.id, plan },
     subscription_data: { trial_period_days: 14, metadata: { org_id: org.id, plan } },
     success_url: `${SITE.url}/dashboard?upgraded=1`,
     cancel_url: `${SITE.url}/pricing`,

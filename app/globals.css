@@ -1,45 +1,118 @@
 @import "tailwindcss";
 
+/* ──────────────────────────────────────────────────────────────────────────
+   Greenlightly design language
+   A governance product, so the visual system is built on the traffic-signal
+   idea: a calm deep green ("go"), with amber and red reserved for caution and
+   stop. The base is warm paper, not stark white, for an editorial feel that
+   reads less like a default template. Display type is a serif (Fraunces) for
+   character; UI/body is Inter.
+   ────────────────────────────────────────────────────────────────────────── */
+
 :root {
-  --background: #ffffff;
-  --foreground: #0f172a;
+  --paper: #f7f5ef;       /* warm page background */
+  --surface: #ffffff;     /* cards / raised surfaces */
+  --ink: #15201a;         /* near-black with a green undertone */
+  --ink-soft: #4b5a52;    /* muted body text */
+  --ink-faint: #7c887f;   /* captions, meta */
+  --line: #e7e2d6;        /* warm hairline borders */
+  --line-strong: #d8d2c3;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  /* Brand: "greenlight" — emerald. Used for accents, approved states, CTAs. */
-  --color-brand-50: #ecfdf5;
-  --color-brand-100: #d1fae5;
-  --color-brand-500: #10b981;
-  --color-brand-600: #059669;
-  --color-brand-700: #047857;
-  --color-brand-900: #064e3b;
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+
+  /* Brand: a deep, slightly desaturated pine. The full ramp is defined so
+     hover/border shades (brand-300/800) actually resolve. */
+  --color-brand-50: #eef5f0;
+  --color-brand-100: #dcebe2;
+  --color-brand-200: #b9d8c6;
+  --color-brand-300: #8dc0a4;
+  --color-brand-400: #57a37e;
+  --color-brand-500: #2f855f;
+  --color-brand-600: #1f6f4e;
+  --color-brand-700: #185a3f;
+  --color-brand-800: #134731;
+  --color-brand-900: #0e3526;
+
+  /* Signal: the literal "greenlight" accent, brighter than the brand pine. */
+  --color-signal: #2bb673;
+
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+
+  --radius-card: 1.1rem;
 }
 
-/* Single intentional LIGHT theme. We do not honour prefers-color-scheme:
-   a dark body would sit behind light-theme text. Surfaces set their own
-   explicit Tailwind colours. */
 body {
-  background: #ffffff;
-  color: var(--foreground);
+  background: var(--paper);
+  color: var(--ink);
   font-family: var(--font-sans);
+  font-feature-settings: "cv05" 1, "ss01" 1;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-::selection { background: var(--color-brand-100); }
+::selection { background: var(--color-brand-100); color: var(--color-brand-900); }
 
-/* Subtle dotted grid used behind the hero. */
+/* Display headings get the serif + tighter optical settings. */
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  letter-spacing: -0.01em;
+}
+
+/* ── Motif: the signal grid behind heroes ──────────────────────────────────
+   A faint warm dot grid, plus an optional soft top-glow. */
 .bg-dotgrid {
-  background-image: radial-gradient(circle at 1px 1px, rgba(15, 23, 42, 0.06) 1px, transparent 0);
-  background-size: 22px 22px;
+  background-image: radial-gradient(circle at 1px 1px, rgba(21, 32, 26, 0.05) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+.bg-paper-glow {
+  background:
+    radial-gradient(60% 60% at 78% 0%, rgba(43, 182, 115, 0.10), transparent 60%),
+    radial-gradient(50% 50% at 0% 10%, rgba(31, 111, 78, 0.06), transparent 55%);
+}
+
+/* Hairline used to separate sections without a hard line. */
+.rule-soft { border-color: var(--line); }
+
+/* A reusable focus ring that matches the brand. */
+.focus-brand:focus-visible {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 2px;
+}
+
+/* ── Signal dot pulse (used by the live console illustration) ───────────── */
+@keyframes signal-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: 0.55; }
+}
+.signal-pulse { animation: signal-pulse 2.4s ease-in-out infinite; }
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.rise-in { animation: rise-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Honour reduced-motion: stop the ambient animations. */
+@media (prefers-reduced-motion: reduce) {
+  .signal-pulse, .rise-in { animation: none !important; }
+  * { scroll-behavior: auto !important; }
 }
 
 /* Print / Save-as-PDF for the generated policy: drop chrome, keep a clean
    document. Elements tagged `print:hidden` are removed. */
 @media print {
   header, footer, .print\:hidden { display: none !important; }
+  body { background: #fff; }
   main { max-width: 100% !important; padding: 0 !important; }
   .policy-doc { font-size: 11pt; color: #000; }
   * { box-shadow: none !important; }

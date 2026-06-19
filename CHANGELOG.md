@@ -1,6 +1,31 @@
 # Changelog
 
-## 2026-06-19 — Real product: live signup, dashboard & billing
+## 2026-06-19 (later): Premium redesign, interactive illustrations, bug fixes
+
+- **New visual identity.** Moved off the default emerald-on-white look to a warm
+  paper background, a deep pine brand scale, a Fraunces display serif paired with
+  Inter, and a traffic-signal motif (stop / caution / go) that maps directly to
+  the risk bands. New signal logo mark, header, footer and shared button system.
+- **Interactive, abstract product illustrations.** The home hero now shows a live
+  "tool register" console (real tool names and risk bands) that cycles on its own,
+  pauses on hover and lets you tap a tool to change its signal. New reusable app
+  mockups for the policy document, the risk directory (with a radial risk gauge)
+  and attestations, all fed by real data so they never drift from the app.
+- **UI mockups across the marketing site.** Every "how it works" step now shows the
+  surface it describes, framed in an app window. Pricing, directory, frameworks,
+  blog and the rest were rebuilt around shared page primitives.
+- **Removed the AI-design tells.** Stripped every em and en dash from user-facing
+  copy and rewrote the phrasing in a plainer founder voice. Added a test that fails
+  the build if an em or en dash reappears in any source string.
+- **Bug fixes.** Stripe Business upgrades now provision the correct plan (session
+  metadata was missing, so the webhook defaulted everyone to Team); session cookies
+  are only `Secure` in production (they silently broke local-dev login); the Business
+  upgrade button disables itself when no price is configured; the personal-org
+  creation race no longer throws on a brand-new account's first load; attestation
+  links require a saved policy; and every workspace read now verifies org membership
+  in-query so a tenant can never read another tenant's data.
+
+## 2026-06-19: Real product: live signup, dashboard & billing
 
 - **Accounts are live.** Replaced the env-gated stub with real email+password
   auth (bcryptjs + jose JWT) on **Neon Postgres** (provisioned via Vercel

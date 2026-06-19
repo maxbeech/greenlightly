@@ -44,11 +44,11 @@ ok(JSON.stringify(hipaa.sections).includes("Business Associate Agreement"), "HIP
 
 // Approved tools listed.
 const withTools = generatePolicy(base({ approvedTools: ["ChatGPT Enterprise", "Claude for Work"] }));
-ok(JSON.stringify(withTools.sections).includes("ChatGPT Enterprise — approved"), "approved tools listed");
+ok(JSON.stringify(withTools.sections).includes("ChatGPT Enterprise: approved"), "approved tools listed");
 
 // Markdown serialization.
 const md = policyToMarkdown(p);
-ok(md.startsWith("# Acme Inc — AI Usage Policy"), "markdown has H1 title");
+ok(md.startsWith("# Acme Inc AI Usage Policy"), "markdown has H1 title");
 ok(md.includes("## 1. Purpose & scope"), "markdown has numbered H2");
 ok(md.includes("greenlightly.com"), "markdown has footer attribution");
 

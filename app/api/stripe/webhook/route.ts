@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     const s = event.data.object as { client_reference_id?: string; customer?: string; subscription?: string; metadata?: Record<string, string> };
     const orgId = s.client_reference_id ?? s.metadata?.org_id;
     if (orgId) await sql`update orgs set plan = ${s.metadata?.plan ?? "team"}, stripe_customer_id = ${s.customer ?? null}, stripe_subscription_id = ${s.subscription ?? null} where id = ${orgId}`;
-  } else if (event.type === "customer.subscription.updated" || event.type === "customer.subscription.deleted") {
+  } else if (event.type === "customer.subscription.created" || event.type === "customer.subscription.updated" || event.type === "customer.subscription.deleted") {
     const sub = event.data.object as { metadata?: Record<string, string>; status?: string };
     const orgId = sub.metadata?.org_id;
     if (orgId) {

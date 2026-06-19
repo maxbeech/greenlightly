@@ -31,16 +31,16 @@ export function scoreTool(t: AiTool): RiskResult {
     add("Trains on your data unless you opt out", 14, "Training is on by default on the consumer tier; you must find and toggle the opt-out.");
 
   if (t.trainsOnBusinessData === "yes")
-    add("Trains on business-tier data", 22, "Even paid/team data may be used for training — unusual and high-risk.");
+    add("Trains on business-tier data", 22, "Even paid/team data may be used for training. That is unusual and high-risk.");
   else if (t.trainsOnBusinessData === "opt-out")
     add("Business-tier training is opt-out", 8, "The paid tier still trains on your data until you opt out.");
 
   if (missing(t.soc2)) add("No SOC 2 Type II", 12, "No independent SOC 2 Type II attestation found.");
   if (missing(t.iso27001)) add("No ISO 27001", 6, "No ISO/IEC 27001 information-security certification found.");
-  if (missing(t.gdprDpa)) add("No GDPR DPA", 12, "No standard Data Processing Addendum offered — a problem for any team with EU/UK users.");
+  if (missing(t.gdprDpa)) add("No GDPR DPA", 12, "No standard Data Processing Addendum offered, a problem for any team with EU/UK users.");
   if (missing(t.dataRegionEu)) add("No EU data residency", 6, "Data cannot be guaranteed to stay in the EU.");
   if (missing(t.ssoSaml)) add("No SSO/SAML", 4, "No enterprise single sign-on, so account access is harder to govern.");
-  if (missing(t.hipaaBaa)) add("No HIPAA BAA", 5, "No Business Associate Agreement — do not use with protected health information.");
+  if (missing(t.hipaaBaa)) add("No HIPAA BAA", 5, "No Business Associate Agreement, so do not use it with protected health information.");
 
   let score = factors.reduce((s, f) => s + f.points, 0);
   score = Math.max(0, Math.min(100, score));
@@ -64,7 +64,7 @@ export const BAND_COLORS: Record<Band, string> = {
 // Short, citable one-liner used in lists, meta descriptions and JSON-LD.
 export function bandSummary(t: AiTool): string {
   const { band, score } = scoreTool(t);
-  if (band === "Unrated") return `${t.name}: risk not yet rated — facts pending verification.`;
+  if (band === "Unrated") return `${t.name}: risk not yet rated. Facts pending verification.`;
   const train =
     t.trainsOnPersonalData === "no" ? "does not train on your data"
     : t.trainsOnPersonalData === "opt-out" ? "trains on your data unless you opt out"

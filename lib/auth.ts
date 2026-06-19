@@ -26,7 +26,9 @@ async function setSession(user: SessionUser): Promise<void> {
     .setProtectedHeader({ alg: "HS256" }).setSubject(user.id)
     .setIssuedAt().setExpirationTime("30d").sign(secretKey());
   const c = await cookies();
-  c.set(COOKIE, token, { httpOnly: true, secure: true, sameSite: "lax", path: "/", maxAge: MAX_AGE });
+  // `secure` only in production: browsers drop Secure cookies over http://, which
+  // would silently break login in local dev and on non-TLS previews.
+  c.set(COOKIE, token, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", path: "/", maxAge: MAX_AGE });
 }
 
 export async function getSession(): Promise<SessionUser | null> {

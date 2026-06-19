@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { SITE } from "@/lib/site";
+import Link from "next/link";
 import { Section } from "@/components/ui";
+import { PageHero } from "@/components/page";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
   title: "Contact",
-  description: "Get in touch with the Greenlightly team — support, sales, security and press.",
+  description: "Get in touch with the Greenlightly team about support, sales, security and press.",
   path: "/contact",
 });
 
@@ -18,19 +19,20 @@ const CHANNELS = [
 
 export default function Page() {
   return (
-    <Section className="max-w-2xl py-14">
-      <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">Contact us</h1>
-      <p className="mt-3 text-slate-600">We&apos;re a small team and we read everything. Email the right inbox and we&apos;ll get back to you quickly.</p>
-      <div className="mt-8 grid gap-4 sm:grid-cols-2">
-        {CHANNELS.map((c) => (
-          <div key={c.e} className="rounded-2xl border border-slate-200 bg-white p-5">
-            <h2 className="font-bold text-slate-900">{c.h}</h2>
-            <p className="mt-1 text-sm text-slate-600">{c.d}</p>
-            <a href={`mailto:${c.e}`} className="mt-3 inline-block text-sm font-semibold text-brand-700 hover:underline">{c.e}</a>
-          </div>
-        ))}
-      </div>
-      <p className="mt-8 text-sm text-slate-500">Prefer the free tools? <a href={`${SITE.url}/ai-usage-policy-generator`} className="font-semibold text-brand-700">Generate an AI usage policy</a> — no account needed.</p>
-    </Section>
+    <>
+      <PageHero eyebrow="Contact" title="Talk to us" intro="We are a small team and we read everything. Email the right inbox and we will get back to you quickly." />
+      <Section className="py-12 sm:py-16">
+        <div className="grid gap-4 sm:grid-cols-2">
+          {CHANNELS.map((c) => (
+            <div key={c.e} className="rounded-2xl border border-line bg-white p-6">
+              <h2 className="font-semibold text-ink">{c.h}</h2>
+              <p className="mt-1 text-sm leading-relaxed text-ink-soft">{c.d}</p>
+              <a href={`mailto:${c.e}`} className="mt-3 inline-block text-sm font-semibold text-brand-700 hover:underline">{c.e}</a>
+            </div>
+          ))}
+        </div>
+        <p className="mt-8 text-sm text-ink-faint">Prefer the free tools? <Link href="/ai-usage-policy-generator" className="font-semibold text-brand-700 hover:underline">Generate an AI usage policy</Link>. No account needed.</p>
+      </Section>
+    </>
   );
 }

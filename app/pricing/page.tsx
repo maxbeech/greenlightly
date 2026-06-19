@@ -3,19 +3,20 @@ import Link from "next/link";
 import { PLANS } from "@/lib/site";
 import { JsonLd } from "@/components/JsonLd";
 import { Section } from "@/components/ui";
+import { PageHero, FaqSection } from "@/components/page";
 import { pageMeta, faqLd, breadcrumbLd } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
-  title: "Pricing — free AI policy, paid AI governance",
+  title: "Pricing: free AI policy, paid AI governance",
   description: "Greenlightly is free for the AI usage policy generator and the full AI Tool Risk Directory. Paid Team ($49/mo) and Business ($149/mo) plans add a shared tool register, versioned policy and employee attestation tracking.",
   path: "/pricing",
   keywords: ["ai governance software pricing", "ai compliance software"],
 });
 
 const FAQS = [
-  { q: "What's free?", a: "The AI usage policy generator and the entire AI Tool Risk Directory are free forever, with no signup or credit card." },
-  { q: "What do paid plans add?", a: "A shared, living register of approved/restricted AI tools, a versioned company policy, employee attestation tracking with a shareable link, and exportable compliance reports — the evidence auditors and customers ask for." },
-  { q: "Is there a trial?", a: "Yes — Team and Business plans include a 14-day trial. No charge until it ends." },
+  { q: "What is free?", a: "The AI usage policy generator and the entire AI Tool Risk Directory are free forever, with no signup or credit card." },
+  { q: "What do paid plans add?", a: "A shared, living register of approved and restricted AI tools, a versioned company policy, employee attestation tracking with a shareable link, and exportable compliance reports: the evidence auditors and customers ask for." },
+  { q: "Is there a trial?", a: "Yes. Team and Business plans include a 14-day trial, with no charge until it ends." },
 ];
 
 export default function Page() {
@@ -23,40 +24,35 @@ export default function Page() {
     <>
       <JsonLd data={faqLd(FAQS)} />
       <JsonLd data={breadcrumbLd([{ name: "Home", path: "/" }, { name: "Pricing", path: "/pricing" }])} />
-      <div className="border-b border-slate-200 bg-dotgrid">
-        <Section className="py-12 text-center">
-          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">Simple, honest pricing</h1>
-          <p className="mx-auto mt-3 max-w-xl text-slate-600">Start free. Upgrade when you need a shared register and the evidence to prove your team follows the rules.</p>
-        </Section>
-      </div>
 
-      <Section className="grid items-start gap-6 py-12 md:grid-cols-3">
-        {PLANS.map((p) => (
-          <div key={p.id} className={`flex flex-col rounded-2xl border bg-white p-6 ${"featured" in p && p.featured ? "border-brand-500 shadow-lg ring-1 ring-brand-200" : "border-slate-200 shadow-sm"}`}>
-            {"featured" in p && p.featured && <span className="mb-2 inline-block rounded-full bg-brand-100 px-2.5 py-0.5 text-xs font-semibold text-brand-800">Most popular</span>}
-            <h2 className="text-lg font-bold text-slate-900">{p.name}</h2>
-            <div className="mt-2"><span className="text-4xl font-extrabold tracking-tight text-slate-900">${p.price}</span><span className="ml-1 text-sm text-slate-500">/ {p.cadence}</span></div>
-            <p className="mt-2 text-sm text-slate-600">{p.blurb}</p>
-            <ul className="mt-5 flex-1 space-y-2 text-sm text-slate-700">
-              {p.features.map((f) => (
-                <li key={f} className="flex gap-2"><span className="mt-0.5 text-brand-600">✓</span>{f}</li>
-              ))}
-            </ul>
-            <Link href={p.href} className={`mt-6 rounded-xl px-4 py-2.5 text-center text-sm font-semibold ${"featured" in p && p.featured ? "bg-brand-600 text-white hover:bg-brand-700" : "border border-slate-300 text-slate-700 hover:border-slate-400"}`}>{p.cta}</Link>
-          </div>
-        ))}
+      <PageHero center eyebrow="Pricing" title="Simple, honest pricing" intro="Start free. Upgrade when you need a shared register and the evidence to prove your team follows the rules." />
+
+      <Section className="grid items-start gap-6 py-14 sm:py-16 md:grid-cols-3">
+        {PLANS.map((p) => {
+          const featured = "featured" in p && p.featured;
+          return (
+            <div key={p.id} className={`relative flex flex-col rounded-[1.3rem] bg-white p-7 ${featured ? "border-2 border-brand-600 shadow-[0_24px_60px_-32px_rgba(31,111,78,0.5)]" : "border border-line shadow-sm"}`}>
+              {featured && <span className="absolute -top-3 left-7 rounded-full bg-brand-700 px-3 py-1 text-xs font-semibold text-white">Most popular</span>}
+              <h2 className="font-display text-xl font-semibold text-ink">{p.name}</h2>
+              <div className="mt-3"><span className="font-display text-4xl font-semibold tracking-tight text-ink">${p.price}</span><span className="ml-1 text-sm text-ink-faint">/ {p.cadence}</span></div>
+              <p className="mt-2 text-sm text-ink-soft">{p.blurb}</p>
+              <ul className="mt-6 flex-1 space-y-2.5 text-sm text-ink-soft">
+                {p.features.map((f) => (
+                  <li key={f} className="flex gap-2.5">
+                    <span className="mt-0.5 grid h-5 w-5 flex-none place-items-center rounded-full bg-brand-100 text-brand-700">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    </span>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <Link href={p.href} className={`mt-7 rounded-full px-4 py-2.5 text-center text-sm font-semibold transition-colors ${featured ? "bg-brand-700 text-white shadow-sm hover:bg-brand-800" : "border border-line-strong text-ink hover:border-ink-faint hover:bg-paper"}`}>{p.cta}</Link>
+            </div>
+          );
+        })}
       </Section>
 
-      <div className="border-t border-slate-200 bg-slate-50">
-        <Section className="py-12">
-          <h2 className="text-xl font-bold text-slate-900">Pricing FAQ</h2>
-          <dl className="mt-5 grid gap-6 md:grid-cols-3">
-            {FAQS.map((f) => (
-              <div key={f.q}><dt className="font-semibold text-slate-900">{f.q}</dt><dd className="mt-1.5 text-sm text-slate-600">{f.a}</dd></div>
-            ))}
-          </dl>
-        </Section>
-      </div>
+      <FaqSection title="Pricing FAQ" faqs={FAQS} />
     </>
   );
 }

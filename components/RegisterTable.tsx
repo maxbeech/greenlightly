@@ -15,11 +15,11 @@ const STATUS_CLASS: Record<string, string> = {
 
 export function RegisterTable({ items, action }: { items: RegisterItem[]; action: (fd: FormData) => void }) {
   return (
-    <div className="divide-y divide-slate-100 rounded-2xl border border-slate-200 bg-white">
+    <div className="divide-y divide-line rounded-2xl border border-line bg-white">
       {items.map((it) => (
         <div key={it.slug} className="flex flex-wrap items-center justify-between gap-3 px-4 py-3">
           <div className="flex items-center gap-3">
-            <span className="font-medium text-slate-900">{it.name}</span>
+            <span className="font-medium text-ink">{it.name}</span>
             <RiskPill band={it.band} score={it.score} />
           </div>
           <form action={action} className="flex items-center gap-2">

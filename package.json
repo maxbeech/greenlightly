@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "tsx test/policy.test.mts && tsx test/risk.test.mts && tsx test/tools.test.mts && tsx test/seo.test.mts && tsx test/frameworks.test.mts && tsx test/site.test.mts",
+    "test": "tsx test/policy.test.mts && tsx test/risk.test.mts && tsx test/tools.test.mts && tsx test/seo.test.mts && tsx test/frameworks.test.mts && tsx test/site.test.mts && tsx test/no-em-dash.test.mts",
     "migrate": "node scripts/migrate.mjs"
   },
   "dependencies": {
