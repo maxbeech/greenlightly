@@ -1,5 +1,5 @@
 // Single source for the legal / trust pages. Content is specific to
-// Greenlightly and deliberately honest (a compliance product cannot afford
+// ModelCharter and deliberately honest (a compliance product cannot afford
 // over-claiming). Rendered by the shared LegalDoc component.
 
 export interface LegalSection { h: string; p: string[] }
@@ -12,7 +12,7 @@ export const LEGAL: Record<string, LegalDoc> = {
     slug: "privacy",
     title: "Privacy Policy",
     updated: UPDATED,
-    intro: "This policy explains what data Greenlightly collects and how we use it. We practise what we preach about data minimisation.",
+    intro: "This policy explains what data ModelCharter collects and how we use it. We practise what we preach about data minimisation.",
     sections: [
       { h: "What we collect", p: [
         "Free tools (the AI Usage Policy Generator and the AI Tool Risk Directory) run in your browser and require no account. The policy you generate is assembled on your device; we do not receive or store its contents.",
@@ -28,20 +28,20 @@ export const LEGAL: Record<string, LegalDoc> = {
       { h: "Your rights", p: [
         "You can access, export or delete your account data at any time by emailing us. We delete account data within 30 days of an account being closed.",
       ] },
-      { h: "Contact", p: ["Questions about this policy? Email privacy@greenlightly.com."] },
+      { h: "Contact", p: ["Questions about this policy? Email privacy@modelcharter.com."] },
     ],
   },
   terms: {
     slug: "terms",
     title: "Terms of Service",
     updated: UPDATED,
-    intro: "These terms govern your use of Greenlightly. By using the service you agree to them.",
+    intro: "These terms govern your use of ModelCharter. By using the service you agree to them.",
     sections: [
       { h: "The service", p: [
-        "Greenlightly provides tools to help you govern the use of AI at work: an AI usage policy generator, an AI tool risk directory, framework guides, and (on paid plans) a team workspace with a tool register, versioned policy and attestation tracking.",
+        "ModelCharter provides tools to help you govern the use of AI at work: an AI usage policy generator, an AI tool risk directory, framework guides, and (on paid plans) a team workspace with a tool register, versioned policy and attestation tracking.",
       ] },
       { h: "Not legal advice", p: [
-        "Greenlightly provides information and document templates, not legal advice. The AI Tool Risk Directory is compiled from public vendor sources and may be incomplete or out of date, so always verify against the vendor's own policies. You are responsible for having qualified advisors review any policy before you adopt it.",
+        "ModelCharter provides information and document templates, not legal advice. The AI Tool Risk Directory is compiled from public vendor sources and may be incomplete or out of date, so always verify against the vendor's own policies. You are responsible for having qualified advisors review any policy before you adopt it.",
       ] },
       { h: "Accounts & acceptable use", p: [
         "You are responsible for activity under your account and for keeping your password secure. Don't misuse the service, attempt to break its security, or use it to violate the law.",
@@ -50,9 +50,9 @@ export const LEGAL: Record<string, LegalDoc> = {
         "Paid plans are billed monthly via Stripe and include a 14-day trial. You can cancel at any time from the billing portal; cancellation takes effect at the end of the current period.",
       ] },
       { h: "Liability", p: [
-        "The service is provided \"as is\". To the extent permitted by law, Greenlightly is not liable for indirect or consequential damages arising from your use of it.",
+        "The service is provided \"as is\". To the extent permitted by law, ModelCharter is not liable for indirect or consequential damages arising from your use of it.",
       ] },
-      { h: "Contact", p: ["Questions? Email hello@greenlightly.com."] },
+      { h: "Contact", p: ["Questions? Email hello@modelcharter.com."] },
     ],
   },
   security: {
@@ -71,7 +71,7 @@ export const LEGAL: Record<string, LegalDoc> = {
         "We build on Vercel, Neon and Stripe, providers with their own SOC 2 and ISO programmes. Payment card data is handled entirely by Stripe; we never see or store card numbers.",
       ] },
       { h: "Responsible disclosure", p: [
-        "Found a vulnerability? Please email security@greenlightly.com. We'll acknowledge promptly and won't pursue researchers acting in good faith.",
+        "Found a vulnerability? Please email security@modelcharter.com. We'll acknowledge promptly and won't pursue researchers acting in good faith.",
       ] },
       { h: "Honest status", p: [
         "We're an early-stage product. We don't yet hold a formal SOC 2 report. When we pursue one, we will say so here rather than imply certifications we do not have.",

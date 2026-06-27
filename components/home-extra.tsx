@@ -12,7 +12,7 @@ const sampleTools = ["chatgpt", "claude", "github-copilot", "otter-ai", "midjour
 export const HOME_FAQS = [
   { q: "What is AI governance?", a: "AI governance is how a company sets rules for using AI safely and legally. In practice that means an AI usage policy, a register of which AI tools are approved, and a way to show staff have read the rules. It is how you avoid shadow AI, where employees use unapproved tools that may train on or leak your data." },
   { q: "Do small companies need an AI usage policy?", a: "Yes. The moment anyone on your team uses ChatGPT, Copilot or similar for work, you have AI risk: confidential data can leak into tools that train on it. A short AI usage policy plus an approved-tools list is the cheapest, fastest control, and it is now expected by SOC 2 auditors and the EU AI Act's AI-literacy duty." },
-  { q: "Is Greenlightly free?", a: "The AI usage policy generator and the full AI Tool Risk Directory are free forever, with no login. Paid Team and Business plans add a shared tool register, versioned policy, employee attestation tracking and exportable compliance reports." },
+  { q: "Is ModelCharter free?", a: "The AI usage policy generator and the full AI Tool Risk Directory are free forever, with no login. Paid Team and Business plans add a shared tool register, versioned policy, employee attestation tracking and exportable compliance reports." },
   { q: "How accurate is the AI Tool Risk Directory?", a: "Every fact is compiled from the vendor's own privacy policy, DPA and trust centre, with source links. Anything we could not confirm is shown as Unverified rather than guessed, so always check the linked source before relying on a fact." },
 ];
 
@@ -85,7 +85,7 @@ export function Positioning() {
         <div className="grid gap-0 md:grid-cols-2">
           <div className="border-b border-line p-8 sm:p-10 md:border-b-0 md:border-r">
             <h2 className="max-w-md font-display text-2xl font-semibold leading-tight tracking-tight text-ink sm:text-3xl">AI governance was built for the Fortune 500. We built it for everyone else.</h2>
-            <p className="mt-4 max-w-md leading-relaxed text-ink-soft">The enterprise platforms are capable, but they are sold through sales teams, priced for big budgets, and aimed at companies that already have a compliance function. Most teams do not. Greenlightly gives you the parts that actually matter, today.</p>
+            <p className="mt-4 max-w-md leading-relaxed text-ink-soft">The enterprise platforms are capable, but they are sold through sales teams, priced for big budgets, and aimed at companies that already have a compliance function. Most teams do not. ModelCharter gives you the parts that actually matter, today.</p>
           </div>
           <div className="grid grid-rows-2 bg-paper">
             <div className="border-b border-line p-7 sm:p-8">
@@ -97,7 +97,7 @@ export function Positioning() {
               </ul>
             </div>
             <div className="p-7 sm:p-8">
-              <h3 className="text-sm font-semibold text-brand-700">Greenlightly</h3>
+              <h3 className="text-sm font-semibold text-brand-700">ModelCharter</h3>
               <ul className="mt-4 space-y-2.5 text-sm font-medium text-ink">
                 {["Self-serve and free to start", "Built for teams with no compliance hire", "A usable policy in one sitting", "$49/mo when you need the team features"].map((x) => (
                   <li key={x} className="flex items-start gap-2.5"><Mark ok />{x}</li>

@@ -1,6 +1,6 @@
-# Greenlightly
+# ModelCharter
 
-**Greenlight AI at work.** AI governance for teams without a compliance
+**Charter your AI at work.** AI governance for teams without a compliance
 department: generate an AI usage policy, see which AI tools are safe to use, and
 track that your team has read the rules.
 

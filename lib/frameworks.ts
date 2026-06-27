@@ -66,7 +66,7 @@ export const FRAMEWORKS: Framework[] = [
     forSmb:
       "You don't need a formal programme to benefit. Doing the Govern (policy + owner) and Map (tool register) functions well already puts a small team ahead of most, and it maps neatly onto what enterprise customers ask about in security reviews.",
     policyTieIn:
-      "An AI usage policy is the primary artefact of the Govern function; the tool register is the Map function. Greenlightly produces both.",
+      "An AI usage policy is the primary artefact of the Govern function; the tool register is the Map function. ModelCharter produces both.",
     faqs: [
       { q: "Is the NIST AI RMF mandatory?", a: "No, it's voluntary. But it has become the de-facto baseline that US enterprise buyers and partners expect, so adopting it helps you pass vendor security reviews." },
       { q: "What are the four NIST AI RMF functions?", a: "Govern, Map, Measure and Manage. Govern sets policy and accountability; Map catalogues AI use and context; Measure assesses risk; Manage acts on it." },
@@ -91,7 +91,7 @@ export const FRAMEWORKS: Framework[] = [
     forSmb:
       "Full certification is a project, but the structure is a useful target: a policy, an owner, a risk/impact assessment of your AI uses, and a register of tools and controls. Building those now makes a future certification far cheaper.",
     policyTieIn:
-      "ISO 42001 literally requires a documented AI policy and a record of AI systems in use. That is exactly what Greenlightly's generator and register create.",
+      "ISO 42001 literally requires a documented AI policy and a record of AI systems in use. That is exactly what ModelCharter's generator and register create.",
     faqs: [
       { q: "What is ISO 42001?", a: "ISO/IEC 42001:2023 is the international standard for an AI management system: a certifiable framework for governing how an organisation develops and uses AI." },
       { q: "Do we need ISO 42001 to use AI?", a: "No. It is voluntary, but enterprise customers increasingly ask about it. Even without certifying, adopting its core artefacts (policy, register, risk assessment) is good practice." },
@@ -116,7 +116,7 @@ export const FRAMEWORKS: Framework[] = [
     forSmb:
       "If you sell to other businesses, SOC 2 is usually the gate. Adding an AI usage policy, a vendor/tool register and attestation records closes the most common AI-related gaps auditors now raise.",
     policyTieIn:
-      "Greenlightly gives you the AI usage policy, the AI-vendor register and the staff attestation records that SOC 2 auditors ask for: the evidence, not the document alone.",
+      "ModelCharter gives you the AI usage policy, the AI-vendor register and the staff attestation records that SOC 2 auditors ask for: the evidence, not the document alone.",
     faqs: [
       { q: "Does SOC 2 cover AI?", a: "SOC 2 has no separate AI criterion, but auditors evaluate AI under Security and Confidentiality. They expect an AI usage policy and that AI vendors are governed like other subprocessors." },
       { q: "What's the difference between SOC 2 Type I and Type II?", a: "Type I assesses whether controls are designed correctly at a point in time; Type II assesses whether they actually operated effectively over a period, and is the report enterprise buyers prefer." },

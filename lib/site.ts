@@ -2,19 +2,18 @@
 // sitemap, nav and footer. Keep `updated` stable to avoid sitemap churn.
 
 export const SITE = {
-  name: "Greenlightly",
-  domain: "greenlightly.com",
-  // Production host. Ships on the vercel.app subdomain until the .com is pointed.
-  url: "https://greenlightly.vercel.app",
-  tagline: "Greenlight AI at work",
+  name: "ModelCharter",
+  domain: "modelcharter.com",
+  url: "https://www.modelcharter.com",
+  tagline: "Charter your AI at work",
   shortDescription:
-    "Greenlightly helps small and mid-sized teams govern AI. Generate an AI usage policy quickly, see which AI tools are safe to use, and check your team has read the rules.",
+    "ModelCharter helps small and mid-sized teams govern AI. Generate an AI usage policy quickly, see which AI tools are safe to use, and check your team has read the rules.",
   description:
-    "Greenlightly is the AI governance tool for companies without a compliance team. Build a tailored AI usage policy with the free generator, look up how 20+ popular AI tools handle your data in the AI Tool Risk Directory, map your obligations under the EU AI Act, NIST AI RMF, ISO 42001 and SOC 2, and keep a register of which tools your team is approved to use.",
-  email: "hello@greenlightly.com",
+    "ModelCharter is the AI governance tool for companies without a compliance team. Build a tailored AI usage policy with the free generator, look up how 20+ popular AI tools handle your data in the AI Tool Risk Directory, map your obligations under the EU AI Act, NIST AI RMF, ISO 42001 and SOC 2, and keep a register of which tools your team is approved to use.",
+  email: "hello@modelcharter.com",
   // Stable last-updated date for sitemap lastmod.
-  updated: "2026-06-18",
-  twitter: "@greenlightly",
+  updated: "2026-06-26",
+  twitter: "@modelcharter",
   // The single primary keyword cluster this site targets.
   primaryKeyword: "ai governance",
 };

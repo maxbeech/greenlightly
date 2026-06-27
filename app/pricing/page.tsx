@@ -8,7 +8,7 @@ import { pageMeta, faqLd, breadcrumbLd } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
   title: "Pricing: free AI policy, paid AI governance",
-  description: "Greenlightly is free for the AI usage policy generator and the full AI Tool Risk Directory. Paid Team ($49/mo) and Business ($149/mo) plans add a shared tool register, versioned policy and employee attestation tracking.",
+  description: "ModelCharter is free for the AI usage policy generator and the full AI Tool Risk Directory. Paid Team ($49/mo) and Business ($149/mo) plans add a shared tool register, versioned policy and employee attestation tracking.",
   path: "/pricing",
   keywords: ["ai governance software pricing", "ai compliance software"],
 });

@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-06-26 — Rebrand to ModelCharter
+
+Full rebrand from Greenlightly to ModelCharter across all source files, metadata,
+legal copy, tests, package configuration and deployment config. Domain updated to
+modelcharter.com; all @greenlightly.com email addresses updated to @modelcharter.com.
+Hero tagline updated to "Charter your AI at work." Auth session cookie renamed from
+gl_session to mc_session (existing sessions will require re-login).
+
 ## 2026-06-19 (later): Premium redesign, interactive illustrations, bug fixes
 
 - **New visual identity.** Moved off the default emerald-on-white look to a warm
@@ -42,7 +50,7 @@
 
 ## 2026-06-18 — Initial launch
 
-First public release of Greenlightly — AI governance for teams without a
+First public release of ModelCharter — AI governance for teams without a
 compliance department.
 
 ### Public (live, no backend)

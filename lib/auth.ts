@@ -7,7 +7,7 @@ import { getSql, isDbConfigured } from "./db";
 // httpOnly cookie (signed with AUTH_SECRET). No external email/OAuth provider
 // required, so signup works the moment the DB + secret are configured.
 
-const COOKIE = "gl_session";
+const COOKIE = "mc_session";
 const MAX_AGE = 60 * 60 * 24 * 30; // 30 days
 const secretKey = () => new TextEncoder().encode(process.env.AUTH_SECRET ?? "");
 

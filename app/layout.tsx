@@ -53,9 +53,9 @@ function Footer() {
     <footer className="border-t border-line bg-white print:hidden">
       <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:grid-cols-2 md:grid-cols-4">
         <div className="sm:col-span-2 md:col-span-1">
-          <Link href="/" aria-label="Greenlightly home" className="flex items-center gap-2.5">
+          <Link href="/" aria-label="ModelCharter home" className="flex items-center gap-2.5">
             <SignalMark />
-            <span className="text-[1.15rem] font-semibold tracking-tight text-ink">Greenlightly</span>
+            <span className="text-[1.15rem] font-semibold tracking-tight text-ink">ModelCharter</span>
           </Link>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink-soft">
             AI governance for teams that do not have a compliance department.

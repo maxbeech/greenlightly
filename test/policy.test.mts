@@ -50,7 +50,7 @@ ok(JSON.stringify(withTools.sections).includes("ChatGPT Enterprise: approved"), 
 const md = policyToMarkdown(p);
 ok(md.startsWith("# Acme Inc AI Usage Policy"), "markdown has H1 title");
 ok(md.includes("## 1. Purpose & scope"), "markdown has numbered H2");
-ok(md.includes("greenlightly.com"), "markdown has footer attribution");
+ok(md.includes("modelcharter.com"), "markdown has footer attribution");
 
 // Empty company name falls back gracefully.
 ok(generatePolicy(base({ companyName: "" })).title.includes("Our company"), "blank company name falls back");

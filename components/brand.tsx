@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 // The brand device: a traffic-signal glyph with the bottom light lit green.
-// It carries the whole "greenlight your AI" idea, so it's the single source of
+// It carries the ModelCharter identity, so it's the single source of
 // truth for the mark and reused by the header, footer and hero.
 export function SignalMark({ size = 28, className = "" }: { size?: number; className?: string }) {
   return (
@@ -24,14 +24,14 @@ export function Wordmark({ size = 28 }: { size?: number }) {
   return (
     <span className="flex items-center gap-2.5">
       <SignalMark size={size} />
-      <span className="text-[1.15rem] font-semibold tracking-tight text-ink">Greenlightly</span>
+      <span className="text-[1.15rem] font-semibold tracking-tight text-ink">ModelCharter</span>
     </span>
   );
 }
 
 export function LogoLink({ size = 28 }: { size?: number }) {
   return (
-    <Link href="/" aria-label="Greenlightly home" className="focus-brand rounded-md">
+    <Link href="/" aria-label="ModelCharter home" className="focus-brand rounded-md">
       <Wordmark size={size} />
     </Link>
   );

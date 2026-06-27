@@ -32,10 +32,10 @@ export function Hero() {
           <div>
             <Pill tone="brand"><span className="h-1.5 w-1.5 rounded-full bg-signal" />For teams without a compliance department</Pill>
             <h1 className="mt-6 font-display text-[2.7rem] font-semibold leading-[1.04] tracking-tight text-ink sm:text-[3.9rem]">
-              Give your team the <span className="text-brand-700">greenlight</span> on AI.
+              Give your team an <span className="text-brand-700">AI charter</span>.
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft">
-              Your team already runs on ChatGPT, Copilot and a dozen other AI tools. Greenlightly shows you which ones
+              Your team already runs on ChatGPT, Copilot and a dozen other AI tools. ModelCharter shows you which ones
               are safe, writes the policy that covers them, and keeps a record that everyone has read it. No compliance
               hire required.
             </p>
@@ -47,7 +47,7 @@ export function Hero() {
           </div>
 
           <div className="relative">
-            <AppFrame title="greenlightly.app / register">
+            <AppFrame title="modelcharter.com / register">
               <SignalConsole items={consoleTools} />
             </AppFrame>
             <div className="absolute -bottom-5 left-4 hidden items-center gap-2.5 rounded-xl border border-line bg-white px-3.5 py-2.5 shadow-lg sm:flex">

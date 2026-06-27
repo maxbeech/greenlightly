@@ -1,4 +1,4 @@
--- Greenlightly schema (Postgres / Neon). Custom email+password auth; tenant
+-- ModelCharter schema (Postgres / Neon). Custom email+password auth; tenant
 -- scoping is enforced in queries (org_id on every tenant table). Idempotent.
 
 create extension if not exists "pgcrypto";

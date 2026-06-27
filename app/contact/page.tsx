@@ -6,15 +6,15 @@ import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
   title: "Contact",
-  description: "Get in touch with the Greenlightly team about support, sales, security and press.",
+  description: "Get in touch with the ModelCharter team about support, sales, security and press.",
   path: "/contact",
 });
 
 const CHANNELS = [
-  { h: "General & support", e: "hello@greenlightly.com", d: "Questions about the product, your account or a tool in the directory." },
-  { h: "Sales", e: "sales@greenlightly.com", d: "Team and Business plans, volume pricing, procurement and security reviews." },
-  { h: "Security", e: "security@greenlightly.com", d: "Report a vulnerability or ask about our security practices." },
-  { h: "Privacy", e: "privacy@greenlightly.com", d: "Data access, export or deletion requests." },
+  { h: "General & support", e: "hello@modelcharter.com", d: "Questions about the product, your account or a tool in the directory." },
+  { h: "Sales", e: "sales@modelcharter.com", d: "Team and Business plans, volume pricing, procurement and security reviews." },
+  { h: "Security", e: "security@modelcharter.com", d: "Report a vulnerability or ask about our security practices." },
+  { h: "Privacy", e: "privacy@modelcharter.com", d: "Data access, export or deletion requests." },
 ];
 
 export default function Page() {

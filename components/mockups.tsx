@@ -19,7 +19,7 @@ function SkeletonLines({ widths }: { widths: string[] }) {
 
 export function PolicyDocMock({ title, version, sections, acknowledged, total }: { title: string; version: number; sections: string[]; acknowledged: number; total: number }) {
   return (
-    <AppFrame title="Greenlightly · AI usage policy">
+    <AppFrame title="ModelCharter · AI usage policy">
       <div className="p-5">
         <div className="flex items-start justify-between gap-3">
           <h3 className="font-display text-lg font-semibold leading-snug text-ink">{title}</h3>
@@ -46,7 +46,7 @@ export function PolicyDocMock({ title, version, sections, acknowledged, total }:
 
 export function DirectoryMock({ score, band, rows }: { score: number; band: Band; rows: { name: string; band: Band; score: number }[] }) {
   return (
-    <AppFrame title="Greenlightly · AI Tool Risk Directory">
+    <AppFrame title="ModelCharter · AI Tool Risk Directory">
       <div className="grid grid-cols-[auto_1fr] items-center gap-5 p-5">
         <RiskGauge score={score} band={band} size={116} />
         <div className="space-y-2">
@@ -65,7 +65,7 @@ export function DirectoryMock({ score, band, rows }: { score: number; band: Band
 export function AttestMock({ rows, signed, total }: { rows: { initials: string; team: string; signed: boolean }[]; signed: number; total: number }) {
   const pct = Math.round((signed / Math.max(1, total)) * 100);
   return (
-    <AppFrame title="Greenlightly · Attestations">
+    <AppFrame title="ModelCharter · Attestations">
       <div className="p-5">
         <div className="flex items-center justify-between">
           <p className="text-sm font-semibold text-ink">Who has read the policy</p>

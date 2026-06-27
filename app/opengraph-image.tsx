@@ -18,9 +18,9 @@ export default function OG() {
             <div style={dot("rgba(255,255,255,0.30)", 16)} />
             <div style={dot("#34e08b", 20)} />
           </div>
-          <div style={{ display: "flex", fontSize: 42, fontWeight: 700, color: "#15201a" }}>Greenlightly</div>
+          <div style={{ display: "flex", fontSize: 42, fontWeight: 700, color: "#15201a" }}>ModelCharter</div>
         </div>
-        <div style={{ display: "flex", marginTop: 44, fontSize: 74, fontWeight: 800, color: "#15201a", lineHeight: 1.04, letterSpacing: -1 }}>Greenlight AI at work.</div>
+        <div style={{ display: "flex", marginTop: 44, fontSize: 74, fontWeight: 800, color: "#15201a", lineHeight: 1.04, letterSpacing: -1 }}>Charter your AI at work.</div>
         <div style={{ display: "flex", marginTop: 28, fontSize: 30, color: "#4b5a52", maxWidth: 960, lineHeight: 1.35 }}>
           Generate an AI usage policy, see which AI tools are safe to use, and prove your team has read the rules. No compliance department required.
         </div>

@@ -164,6 +164,6 @@ export function policyToMarkdown(p: Policy): string {
       else { lines.push(b, ""); }
     }
   }
-  lines.push("---", "_Generated with Greenlightly (greenlightly.com). Review with your own legal or compliance advisor before adopting._");
+  lines.push("---", "_Generated with ModelCharter (modelcharter.com). Review with your own legal or compliance advisor before adopting._");
   return lines.join("\n");
 }

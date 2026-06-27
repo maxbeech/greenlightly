@@ -3,8 +3,8 @@ import { eq, ok, done } from "./_assert.mts";
 
 // pageMeta: canonical + title templating.
 const m = pageMeta({ title: "Tools", description: "d", path: "/tools" });
-eq(m.alternates?.canonical, "https://greenlightly.vercel.app/tools", "canonical built from SITE.url + path");
-ok(String(m.title).includes("Greenlightly"), "non-home title appends brand");
+eq(m.alternates?.canonical, "https://www.modelcharter.com/tools", "canonical built from SITE.url + path");
+ok(String(m.title).includes("ModelCharter"), "non-home title appends brand");
 eq(String(pageMeta({ title: "Home", description: "d", path: "/" }).title), "Home", "home title not suffixed");
 
 // faqLd shape.
